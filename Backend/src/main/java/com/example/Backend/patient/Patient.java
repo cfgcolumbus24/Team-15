@@ -1,4 +1,4 @@
-package com.example.Backend.Patient;
+package com.example.Backend.patient;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +20,7 @@ public class Patient {
 
     private int weight;
 
-    private double BMI;
+    private double bmi;
 
     private String race;
 
@@ -35,7 +35,7 @@ public class Patient {
         this.age = -1;
         this.height = "0'0\"";
         this.weight = -1;
-        this.BMI = 0.0;
+        this.bmi = 0.0;
         this.race = "";
         this.sex = "";
         this.income = 0;
@@ -47,7 +47,7 @@ public class Patient {
         this.age = age;
         this.height = height;
         this.weight = weight;
-        this.BMI = BMI;
+        this.bmi = BMI;
         this.race = race;
         this.sex = sex;
         this.income = income;
@@ -95,12 +95,12 @@ public class Patient {
         this.weight = weight;
     }
 
-    public double getBMI() {
-        return BMI;
+    public double getBmi() {
+        return bmi;
     }
 
-    public void setBMI(double BMI) {
-        this.BMI = BMI;
+    public void setBmi(double BMI) {
+        this.bmi = BMI;
     }
 
     public String getRace() {
