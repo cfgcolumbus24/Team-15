@@ -1,7 +1,7 @@
 import ListGroup from "./components/ListGroup";
 
 function App() {
-    let items = []; // Initialize items as an empty array
+    let items = ["Clincian"]; // Initialize items as an empty array
 
     const getMessage = () => {
         return items.length === 0 ? <p>No items found</p> : null;
