@@ -3,15 +3,20 @@ package com.example.Backend.Cliniation;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import java.util.List;
+import jakarta.persistence.*;
 
 @Component
 @ConfigurationProperties(prefix = "clination")
 public class Clination {
+    @Id
+
+    private Long id;
+
     private String name;
     private String address;
     private String speciality;
     private List<String> clients;
-    private Long id;
+
 
     // Constructor
 
