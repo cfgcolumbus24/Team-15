@@ -1,9 +1,11 @@
 package com.example.Backend.Cliniation;
 
+import com.example.Backend.patient.Patient;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import jakarta.persistence.*;
+
 
 @Component
 @ConfigurationProperties(prefix = "clination")
@@ -15,7 +17,7 @@ public class Clination {
     private String name;
     private String address;
     private String speciality;
-    private List<String> clients;
+    private List<Patient> clients;
 
 
     // Constructor
@@ -48,11 +50,11 @@ public class Clination {
         this.speciality = speciality;
     }
 
-    public List<String> getClients() {
+    public List<Patient> getClients() {
         return clients;
     }
 
-    public void setClients(List<String> clients) {
+    public void setClients(List<Patient> clients) {
         this.clients = clients;
     }
 
