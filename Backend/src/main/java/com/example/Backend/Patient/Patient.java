@@ -4,8 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "patient")
 public class Patient {
 
     @Id
@@ -20,7 +22,7 @@ public class Patient {
 
     private int weight;
 
-    private double BMI;
+    private double bmi;
 
     private String race;
 
@@ -35,7 +37,7 @@ public class Patient {
         this.age = -1;
         this.height = "0'0\"";
         this.weight = -1;
-        this.BMI = 0.0;
+        this.bmi = 0.0;
         this.race = "";
         this.sex = "";
         this.income = 0;
@@ -47,7 +49,7 @@ public class Patient {
         this.age = age;
         this.height = height;
         this.weight = weight;
-        this.BMI = BMI;
+        this.bmi = BMI;
         this.race = race;
         this.sex = sex;
         this.income = income;
@@ -95,21 +97,22 @@ public class Patient {
         this.weight = weight;
     }
 
-    public double getBMI() {
-        return BMI;
+    public double getBmi() {
+        return bmi;
     }
 
     public void setBMI(double BMI) {
-        this.BMI = BMI;
+        this.bmi = bmi;
     }
 
     public String getRace() {
         return race;
     }
 
-    public void setRace(String race) {
-        this.race = race;
+    public void setBmi(double bmi) {
+        this.bmi = bmi;
     }
+
 
     public String getSex() {
         return sex;
