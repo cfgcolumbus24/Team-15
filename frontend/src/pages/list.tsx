@@ -1,26 +1,40 @@
-import ListGroup from "./components/ListGroup";
+import React, { useState } from 'react';
 
-function App() {
-    let items = ["Clincian"]; // Initialize items as an empty array
+const Dropdown: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
 
-    const getMessage = () => {
-        return items.length === 0 ? <p>No items found</p> : null;
-    }
+  const options = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+  ];
 
-    return (
-        <>
-            <h1>List</h1>
-            {getMessage()} // Call the function inside {}
-            {items.length === 0 && <p>No items found</p>}
-            <ul className="list-group">
-                {items.map((item) => (
-                    <li className="list-group-item" key={item}>
-                        {item}
-                    </li>
-                ))}
-            </ul>
-        </>
-    );
-}
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
-export default App;
+  const handleOptionClick = (value: string) => {
+    setSelectedOption(value);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="dropdown">
+      <button onClick={toggleDropdown}>
+        {selectedOption || 'Select an option'}
+      </button>
+      {isOpen && (
+        <ul className="dropdown-menu">
+          {options.map((option) => (
+            <li key={option.value} onClick={() => handleOptionClick(option.value)}>
+              {option.label}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+export default Dropdown;
