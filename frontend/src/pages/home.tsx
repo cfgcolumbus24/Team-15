@@ -1,3 +1,4 @@
+// HomePage.tsx
 import React from 'react';
 import {
   Box,
@@ -7,9 +8,27 @@ import {
   Grid,
   CircularProgress,
   Avatar,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from '@mui/material';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
-import { pink, blue, green, orange } from '@mui/material/colors';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from 'recharts';
+import { pink, blue, green, orange, purple, grey } from '@mui/material/colors';
 
 // Sample hardcoded data
 const totalPatients = 1200;
@@ -25,14 +44,24 @@ const raceData = [
   { name: 'Hispanic', value: 100 },
 ];
 const patientProgressData = [
-  { name: 'Improved', value: 75 },
-  { name: 'Stable', value: 15 },
-  { name: 'Worsened', value: 10 },
+  { month: 'Jan', improved: 70, stable: 25, worsened: 5 },
+  { month: 'Feb', improved: 72, stable: 22, worsened: 6 },
+  { month: 'Mar', improved: 75, stable: 20, worsened: 5 },
+  { month: 'Apr', improved: 78, stable: 18, worsened: 4 },
+  { month: 'May', improved: 80, stable: 15, worsened: 5 },
+  { month: 'Jun', improved: 82, stable: 13, worsened: 5 },
+  { month: 'Jul', improved: 85, stable: 10, worsened: 5 },
 ];
 const treatmentData = [
   { treatment: 'Therapy', count: 400 },
   { treatment: 'Medication', count: 700 },
   { treatment: 'Surgery', count: 100 },
+];
+const satisfactionLevel = 82; // Percentage for patient satisfaction
+const upcomingAppointments = [
+  { name: 'John Doe', date: '2024-11-02', urgency: 'High' },
+  { name: 'Jane Smith', date: '2024-11-03', urgency: 'Low' },
+  { name: 'George Brown', date: '2024-11-04', urgency: 'Medium' },
 ];
 
 // Colors for the charts
@@ -40,7 +69,7 @@ const COLORS = [pink[400], blue[400], green[400], orange[400]];
 
 const HomePage: React.FC = () => {
   return (
-    <Box p={3}>
+    <Box p={3} bgcolor={grey[50]}>
       <Typography variant="h4" gutterBottom>
         Clinician Dashboard
       </Typography>
@@ -48,13 +77,13 @@ const HomePage: React.FC = () => {
       <Grid container spacing={3}>
         {/* Total Patients Card */}
         <Grid item xs={12} sm={6} md={4}>
-          <Card>
+          <Card sx={{ boxShadow: 3, borderRadius: 2, p: 2 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Total Patients
               </Typography>
               <Box display="flex" alignItems="center">
-                <Avatar sx={{ bgcolor: blue[500], width: 56, height: 56 }}>
+                <Avatar sx={{ bgcolor: purple[500], width: 56, height: 56 }}>
                   <Typography variant="h5" color="white">
                     {totalPatients}
                   </Typography>
@@ -70,9 +99,9 @@ const HomePage: React.FC = () => {
           </Card>
         </Grid>
 
-        {/* Demographics Card */}
+        {/* Gender Demographics */}
         <Grid item xs={12} sm={6} md={4}>
-          <Card>
+          <Card sx={{ boxShadow: 3, borderRadius: 2, p: 2 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Gender Demographics
@@ -97,9 +126,9 @@ const HomePage: React.FC = () => {
           </Card>
         </Grid>
 
-        {/* Race Demographics Card */}
+        {/* Race Demographics */}
         <Grid item xs={12} sm={6} md={4}>
-          <Card>
+          <Card sx={{ boxShadow: 3, borderRadius: 2, p: 2 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Race Demographics
@@ -114,36 +143,31 @@ const HomePage: React.FC = () => {
           </Card>
         </Grid>
 
-        {/* Patient Progress Card */}
-        <Grid item xs={12} sm={6} md={4}>
-          <Card>
+        {/* Patient Progress - Line Chart */}
+        <Grid item xs={12} sm={6} md={6}>
+          <Card sx={{ boxShadow: 3, borderRadius: 2, p: 2 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Patient Progress
+                Patient Progress Over Time
               </Typography>
-              <Box display="flex" justifyContent="space-around" mt={2}>
-                {patientProgressData.map((progress, index) => (
-                  <Box key={index} textAlign="center">
-                    <CircularProgress
-                      variant="determinate"
-                      value={progress.value}
-                      size={80}
-                      sx={{ color: COLORS[index % COLORS.length] }}
-                    />
-                    <Typography variant="caption" display="block">
-                      {progress.name}
-                    </Typography>
-                    <Typography variant="body2">{progress.value}%</Typography>
-                  </Box>
-                ))}
-              </Box>
+              <LineChart width={300} height={200} data={patientProgressData}>
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Line type="monotone" dataKey="improved" stroke={green[500]} />
+                <Line type="monotone" dataKey="stable" stroke={orange[500]} />
+                <Line type="monotone" dataKey="worsened" stroke={pink[500]} />
+              </LineChart>
+              <Typography variant="body2" color="text.secondary">
+                Trends in patient recovery over time
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* Treatments Given Card */}
+        {/* Treatments Given */}
         <Grid item xs={12} sm={6} md={4}>
-          <Card>
+          <Card sx={{ boxShadow: 3, borderRadius: 2, p: 2 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 Treatments Given
@@ -152,8 +176,63 @@ const HomePage: React.FC = () => {
                 <XAxis dataKey="treatment" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="count" fill={green[400]} />
+                <Bar dataKey="count" fill={orange[400]} />
               </BarChart>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Patient Satisfaction */}
+        <Grid item xs={12} sm={6} md={4}>
+          <Card sx={{ boxShadow: 3, borderRadius: 2, p: 2 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Patient Satisfaction
+              </Typography>
+              <Box textAlign="center" mt={2}>
+                <CircularProgress
+                  variant="determinate"
+                  value={satisfactionLevel}
+                  size={100}
+                  thickness={4}
+                  sx={{ color: green[500] }}
+                />
+                <Typography variant="h4" color="text.primary" mt={1}>
+                  {satisfactionLevel}%
+                </Typography>
+                <Typography color="text.secondary">Satisfaction Level</Typography>
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Upcoming Appointments */}
+        <Grid item xs={12} sm={6} md={4}>
+          <Card sx={{ boxShadow: 3, borderRadius: 2, p: 2 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Upcoming Appointments
+              </Typography>
+              <TableContainer component={Paper}>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Date</TableCell>
+                      <TableCell>Urgency</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {upcomingAppointments.map((appointment, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{appointment.name}</TableCell>
+                        <TableCell>{appointment.date}</TableCell>
+                        <TableCell>{appointment.urgency}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </CardContent>
           </Card>
         </Grid>
