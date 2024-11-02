@@ -152,9 +152,9 @@ const Home: React.FC = () => {
         const monthData = data[key];
         return {
           month: monthMap[Number(key)],
-          improved: monthData[0],
-          stable: monthData[1],
-          worsened: monthData[2],
+          improved: monthData[1],
+          stable: monthData[2],
+          worsened: monthData[0],
         };
       });
 
