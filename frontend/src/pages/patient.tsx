@@ -10,7 +10,7 @@ import Dropdown from './list.tsx';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import { usePDF } from 'react-to-pdf';
+
 
 function Patient() {
   const { patientName } = useParams();

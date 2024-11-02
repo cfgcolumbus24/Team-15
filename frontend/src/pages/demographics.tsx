@@ -86,7 +86,7 @@ const Demographics: React.FC = () => {
         });
         const secondResponse = axios.get(url+ 'patients/demo/race').then(response => {
                         console.log(response)
-                        let tempRaceData = []
+                        const  tempRaceData: any[] = []
                         Object.keys(response.data).forEach((a) => {
                             tempRaceData.push({name: a, value: response.data[a]})
                         });
@@ -97,8 +97,8 @@ const Demographics: React.FC = () => {
                 });
         const thirdResponse = axios.get(url+ 'patients/demo/gender').then(response => {
                                 console.log(response)
-                                let tempGenderData = []
-                                Object.keys(response.data).forEach((a) => {
+                                const tempGenderData: any[] = []
+                                Object.keys(response.data).forEach((a:String) => {
                                     tempGenderData.push({name: a, value: response.data[a]})
                                 });
                                 setGenderData(tempGenderData)
@@ -108,7 +108,7 @@ const Demographics: React.FC = () => {
                         });
         const fourthResponse = axios.get(url+ 'patients/demo/income').then(response => {
                                         console.log(response)
-                                        let tempIncomeData = []
+                                        const tempIncomeData: any[] = []
                                         Object.keys(response.data).forEach((a) => {
                                             tempIncomeData.push({name: a, value: response.data[a]})
                                         });
