@@ -4,6 +4,7 @@ import LoginFinal from './pages/login.tsx';
 import Home from './pages/home.tsx';
 import Demographics from './pages/demographics.tsx';
 import Patients from './pages/users.tsx';
+import Patient from './pages/patient.tsx'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<LoginFinal />} />
         <Route path="/home" element={<Home />} />
         <Route path="/Patients" element={<Patients />} />
+        <Route path="/patient/:patientId" element={<Patient />} />
         <Route path="/demographics" element={<Demographics />} />
       </Routes>
     </Router>

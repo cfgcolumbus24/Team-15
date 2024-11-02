@@ -22,3 +22,5 @@ function Patient() {
     </Container>
   );
 }
+
+export default Patient;
