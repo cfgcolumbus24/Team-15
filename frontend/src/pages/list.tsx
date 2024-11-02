@@ -11,6 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate } from "react-router-dom";
 
 function Dropdown() {
@@ -32,6 +33,10 @@ function Dropdown() {
 
   const handlePatients = () => {
     navigate("/Patients");
+  };
+
+  const handleHome = () => {
+    navigate("/Home");
   };
 
   const DrawerList = (
@@ -66,6 +71,14 @@ function Dropdown() {
               <MailIcon />
             </ListItemIcon>
             <ListItemText primary="Demographics" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleHome}> {/* Add click handler for Demographics */}
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
       </List>
