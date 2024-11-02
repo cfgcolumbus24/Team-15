@@ -68,7 +68,7 @@ VALUES
     ('Barbara', 'Young', '114 Poplar St, Boston MA', 'Palliative Care'),
     ('Michael', 'Allen', '115 Sycamore St, Boston MA', 'Infectious Diseases'),
     ('Karen', 'King', '116 Willow St, Boston MA', 'Emergency Medicine'),
-    ('Charles', 'Wright', '117 Alder St, Boston MA', 'Family Medicine');
+    ('Leon', 'Kennedy', '117 Alder St, Boston MA', 'Family Medicine');
 
 -- Insert sample patients
 INSERT INTO patient

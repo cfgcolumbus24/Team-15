@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Dropdown from './list.tsx';
 import {
   Box,
@@ -11,16 +11,31 @@ import {
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { blue, grey, purple, teal, orange } from '@mui/material/colors';
-
+import axios from 'axios'
 // Sample data for clinician information
-const clinicianData = [
-  { name: 'Dr. Smith', position: 'Cardiologist', color: teal[500] },
-  { name: 'Dr. Johnson', position: 'Pediatrician', color: orange[500] },
-  { name: 'Dr. Lee', position: 'Dermatologist', color: purple[500] },
-  { name: 'Dr. Brown', position: 'Neurologist', color: blue[500] },
-];
+const colors = [teal[500], orange[500], purple[500], blue[500]]
 
 const ClinicianOverview: React.FC = () => {
+const [clinicianData, setClinicianData] = useState([])
+useEffect(() => {
+        const url = 'http://localhost:8080/api/v1/'
+        const fetchClinis = async () => {
+            const response = axios.get(url+ 'clinician/all').then(response => {
+                console.log(response)
+                let count = 0
+                let clinis = []
+                response.data.forEach((clini) => {
+                    clinis.push({name: clini.firstName + ' ' + clini.lastName, position: clini.specialty, color: colors[count % colors.length], address: clini.address })
+                    count +=1
+                })
+                setClinicianData(clinis)
+              }).catch(error => {
+                 alert("Error!")
+              console.error(error);
+            });
+        }
+        fetchClinis();
+      }, []);
   return (
     <Box p={0} bgcolor={grey[100]} minHeight="100vh">
       {/* Header */}
@@ -77,6 +92,9 @@ const ClinicianOverview: React.FC = () => {
                   </Typography>
                   <Typography variant="subtitle1" color="text.secondary">
                     {clinician.position}
+                  </Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                                      {clinician.address}
                   </Typography>
                 </CardContent>
               </Card>
