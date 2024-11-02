@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS clinician_clients CASCADE;
-DROP TABLE IF EXISTS patient CASCADE;
-DROP TABLE IF EXISTS clinician CASCADE;
+DROP TABLE IF EXISTS clinician_clients;
+DROP TABLE IF EXISTS patient;
+DROP TABLE IF EXISTS clinician;
 
 CREATE TABLE clinician
 (
