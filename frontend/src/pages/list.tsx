@@ -47,6 +47,10 @@ function Dropdown() {
     navigate("/Financials");
   };
 
+  const handleClinicians = () => {
+    navigate("/Clinicians");
+  };
+
   const DrawerList = (
     <Box
       sx={{ width: 250 }}
@@ -65,7 +69,7 @@ function Dropdown() {
       </ListItem>
       {["Clinicians"].map((text, index) => (
         <ListItem key={text} disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={handleClinicians}>
             <ListItemIcon>
               <AdminPanelSettingsIcon/>
             </ListItemIcon>

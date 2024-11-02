@@ -43,6 +43,7 @@ const Patients: React.FC = () => {
         throw new Error('Failed to fetch patients');
       }
       const data = await response.json();
+      console.log(data);
       setPatients(data);
     } catch (error) {
       console.error('Error fetching patients:', error);
@@ -117,7 +118,7 @@ const Patients: React.FC = () => {
           </IconButton>
         </Box>
       </Box>
-      <Box sx={{ padding: 3, backgroundColor: 'white', height: '100vh' }}>
+      <Box sx={{ padding: 3, backgroundColor: 'white', minHeight: 'calc(100vh - 220px)' }}>
         <Typography variant="h4" gutterBottom>
           Patients
         </Typography>

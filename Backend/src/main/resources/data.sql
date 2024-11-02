@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 DROP TABLE IF EXISTS clinician_clients;
 DROP TABLE IF EXISTS patient CASCADE;
 DROP TABLE IF EXISTS clinician CASCADE;
 DROP TABLE IF EXISTS patient_progress; 
+=======
+DROP TABLE IF EXISTS clinician_clients CASCADE;
+DROP TABLE IF EXISTS patient CASCADE;
+DROP TABLE IF EXISTS clinician CASCADE;
+DROP TABLE IF EXISTS monthly_budget;
+
+>>>>>>> 789abdd5c1d76c907d246b0be8d6029b0e70a00a
 
 CREATE TABLE clinician
 (
@@ -26,6 +34,13 @@ CREATE TABLE patient
     income VarChar(20),
     history TEXT,
     dob VARCHAR(20)
+);
+
+CREATE TABLE monthly_budget
+(
+   id SERIAL PRIMARY KEY,
+   month_name VARCHAR(10),
+   budget INT
 );
 
 CREATE TABLE clinician_clients
@@ -60,7 +75,7 @@ VALUES
     ('Barbara', 'Young', '114 Poplar St, Boston MA', 'Palliative Care'),
     ('Michael', 'Allen', '115 Sycamore St, Boston MA', 'Infectious Diseases'),
     ('Karen', 'King', '116 Willow St, Boston MA', 'Emergency Medicine'),
-    ('Charles', 'Wright', '117 Alder St, Boston MA', 'Family Medicine');
+    ('Leon', 'Kennedy', '117 Alder St, Boston MA', 'Family Medicine');
 
 -- Insert sample patients
 INSERT INTO patient
@@ -111,6 +126,7 @@ VALUES
     (9, 18),
     (9, 19),
     (10, 20);
+<<<<<<< HEAD
 
     
 CREATE TABLE patient_progress (
@@ -213,3 +229,21 @@ INSERT INTO patient_progress (patient_id, month, current_month, last_month) VALU
     (7, 10, 70.0, 68.0),
     (7, 11, 71.0, 70.0),
     (7, 12, 73.0, 71.0);
+=======
+INSERT INTO monthly_budget
+    (month_name, budget)
+VALUES
+    ('January', 10000),
+    ('February', 20000),
+    ('March', 23500),
+    ('April', 17650),
+    ('May', 14305),
+    ('June', 17500),
+    ('July', 14300),
+    ('August', 12980),
+    ('September', 22000),
+    ('October', 8000),
+    ('November', 17000),
+    ('December', 18000);
+
+>>>>>>> 789abdd5c1d76c907d246b0be8d6029b0e70a00a
