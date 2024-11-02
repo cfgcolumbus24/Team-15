@@ -53,6 +53,15 @@ const incomeData = [
   { name: 'High', value: 200 },
 ];
 
+// Updated sample data for health conditions as a frequency chart
+const healthData = [
+  { name: 'Diabetes', frequency: 400 },
+  { name: 'Hypertension', frequency: 300 },
+  { name: 'Asthma', frequency: 200 },
+  { name: 'Cancer', frequency: 150 },
+  { name: 'Heart Disease', frequency: 100 },
+];
+
 const Demographics: React.FC = () => {
   return (
     <Box p={0} bgcolor={grey[100]} minHeight="100vh">
@@ -74,7 +83,7 @@ const Demographics: React.FC = () => {
         <Typography variant="subtitle1">
           Analyzing Patient Demographics and Distribution
         </Typography>
-        
+
         {/* Dropdown for toggling options */}
         <Dropdown />
 
@@ -174,7 +183,7 @@ const Demographics: React.FC = () => {
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={incomeData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                     <XAxis dataKey="name" label={{ value: 'Income Level', position: 'insideBottom', offset: -5 }} />
-                    <YAxis label={{ value: 'Number of People', angle: -90, position: 'insideLeft', offset: -5 }} />
+                    <YAxis label={{ value: 'Number of People', angle: -90, position: 'insideLeft', offset: -2 }} />
                     <Tooltip wrapperStyle={{ backgroundColor: 'white', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }} />
                     <Bar dataKey="value" fill={teal[400]} />
                   </BarChart>
@@ -183,14 +192,28 @@ const Demographics: React.FC = () => {
             </CardContent>
           </Card>
         </Grid>
-      </Grid>
 
-      {/* Footer */}
-      <Box textAlign="center" mt={4}>
-        <Typography variant="caption" color="text.secondary">
-          Netcare 2024
-        </Typography>
-      </Box>
+        {/* Health Conditions Frequency Chart */}
+        <Grid item xs={12} sm={6} md={4}>
+          <Card sx={{ boxShadow: 4, borderRadius: 3 }}>
+            <CardContent sx={{ padding: 3 }}>
+              <Typography variant="h6" color="text.secondary" gutterBottom>
+                Health Conditions Frequency
+              </Typography>
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={healthData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                    <XAxis dataKey="name" label={{ value: 'Health Conditions', position: 'insideBottom', offset: -5 }} />
+                    <YAxis label={{ value: 'Frequency', angle: -90, position: 'insideLeft', offset: -5 }} />
+                    <Tooltip wrapperStyle={{ backgroundColor: 'white', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }} />
+                    <Bar dataKey="frequency" fill={purple[400]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
