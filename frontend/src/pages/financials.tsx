@@ -163,7 +163,14 @@ const Financials: React.FC = () => {
             </Card>
           </Grid>
         </Grid>
+        {/* Footer */}
+      <Box textAlign="center" mt={4}>
+        <Typography variant="caption" color="text.secondary">
+          Netcare 2024
+        </Typography>
       </Box>
+      </Box>
+      
     </Box>
   );
 };

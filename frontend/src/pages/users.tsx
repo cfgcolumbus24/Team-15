@@ -210,6 +210,12 @@ const Patients: React.FC = () => {
             </Card>
           ))}
         </Box>
+        {/* Footer */}
+      <Box textAlign="center" mt={4}>
+        <Typography variant="caption" color="text.secondary">
+          Netcare 2024
+        </Typography>
+      </Box>
       </Box>
     </Box>
   );
