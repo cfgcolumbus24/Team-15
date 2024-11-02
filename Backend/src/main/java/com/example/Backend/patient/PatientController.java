@@ -131,11 +131,6 @@ public class PatientController {
                 }
             });
         }
-        if (!demographic.equals("income")) {
-            for (String key : demographics.keySet()) {
-                demographics.put(key, demographics.get(key) / count);
-            }
-        }
 
         return demographics;
     }
