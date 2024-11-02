@@ -11,7 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
-function Dropdown() {
+export default function TemporaryDrawer() {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -19,12 +19,7 @@ function Dropdown() {
   };
 
   const DrawerList = (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
+    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
           <ListItem key={text} disablePadding>
@@ -56,11 +51,10 @@ function Dropdown() {
   return (
     <div>
       <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-      <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
+      <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>
     </div>
   );
 }
-export default Dropdown;
 
