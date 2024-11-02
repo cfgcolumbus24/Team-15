@@ -8,74 +8,97 @@ import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import { useNavigate } from "react-router-dom";
 
-function ModeToggle() {
-  const [mounted, setMounted] = React.useState(false);
-
-  // necessary for server-side rendering
-  // because mode is undefined on the server
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return <Button variant="soft">Change mode</Button>;
-  }
-}
-
 const LoginFinal = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleLogin = () => {
-        navigate("/Home");
-    };
+  const handleLogin = () => {
+    navigate("/Home");
+  };
 
   return (
-    <main>
-      <ModeToggle />
+    <main
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start", // Align items to the left
+        justifyContent: "flex-start", // Align items to the top
+        height: "100vh",
+        backgroundColor: "#f5f5f5",
+        padding: "20px", // Add padding to the main container
+      }}
+    >
       <CssBaseline />
+      <Typography
+        level="h2"
+        component="h1"
+        sx={{ 
+          fontWeight: "bold", 
+          fontSize: "2.5rem", 
+          mb: 2 // Margin below the title
+        }}
+      >
+        Netcare
+      </Typography>
       <Sheet
         sx={{
-          width: 300,
-          mx: "auto", // margin left & right
-          my: 4, // margin top & bottom
-          py: 3, // padding top & bottom
-          px: 2, // padding left & right
+          width: 500, // Width of the sign-in box
+          height: 450, // Set to auto to adjust based on content
+          mx: "auto",
+          my: 0, // Remove margin top and bottom
+          py: 4,
+          px: 4,
           display: "flex",
           flexDirection: "column",
           gap: 2,
-          borderRadius: "sm",
-          boxShadow: "md",
+          borderRadius: "md",
+          boxShadow: "lg",
+          marginTop: "160px", // Space above the sign-in box
         }}
         variant="outlined"
       >
-        <div>
-          <Typography level="h4" component="h1">
-            <b>Welcome!</b>
-          </Typography>
-          <Typography level="body-sm">Sign in to continue.</Typography>
-        </div>
+        <Typography level="body-md" textAlign="center" sx={{ mb: -1.5, fontWeight: "bold",  fontSize: "2.2rem"}}>
+          Welcome!
+        </Typography>
+        <Typography level="body-md" textAlign="center" sx={{ mb: 3 }}>
+          Please sign in to continue.
+        </Typography>
         <FormControl>
           <FormLabel>Username</FormLabel>
           <Input
-            // html input attribute
             name="username"
-            type="username"
+            type="text"
             placeholder="johndoe"
+            sx={{
+              height: '48px', // Set input height
+              fontSize: '1rem', // Font size for inputs
+            }}
           />
         </FormControl>
         <FormControl>
           <FormLabel>Password</FormLabel>
           <Input
-            // html input attribute
             name="password"
             type="password"
             placeholder="password"
+            sx={{
+              height: '48px', // Set input height
+              fontSize: '1rem', // Font size for inputs
+            }}
           />
         </FormControl>
-        <Button sx={{ mt: 1}} onClick = {handleLogin}>
-            Log in 
+        <Button 
+          sx={{
+            mt: 2, // Margin top for button
+            height: '48px', // Set button height
+            fontSize: '1rem', // Font size for button
+          }} 
+          onClick={handleLogin}
+        >
+          Log in 
         </Button>
       </Sheet>
     </main>
   );
 }
+
 export default LoginFinal;
