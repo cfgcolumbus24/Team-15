@@ -16,7 +16,11 @@ import {
   Paper,
   IconButton,
   TextField,
-  Button
+  Button,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
 } from '@mui/material';
 import {
   LineChart,
@@ -52,9 +56,17 @@ const upcomingAppointments = [
   { name: 'Emily White', date: '2024-11-05', time: '9:00 AM', urgency: 'High', status: 'Confirmed' },
 ];
 
+const commands = [
+  'get Age less than 20',
+  'get Race{ Asian }',
+  'get Date OF Birth',
+  'get All Clinicians',
+];
+
 const Home: React.FC = () => {
   const [totalPatients, setTotalPatients] = useState<number>(0);
   const [inputValue, setInputValue] = useState<string>('');
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
   useEffect(() => {
     fetchTotalPatients();
@@ -72,6 +84,21 @@ const Home: React.FC = () => {
       console.error('Error fetching total patients:', error);
       setTotalPatients(0);
     }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    if (value.startsWith('/')) {
+      setShowDropdown(true);
+    } else {
+      setShowDropdown(false);
+    }
+  };
+
+  const handleCommandClick = (command: string) => {
+    setInputValue(`/${command}`);
+    setShowDropdown(false);
   };
 
   const handleExecute = () => {
@@ -113,7 +140,53 @@ const Home: React.FC = () => {
         </Box>
       </Box>
 
-      <Grid container spacing={3} justifyContent="center">
+      {/* Input field and Execute button */}
+      <Box display="flex" justifyContent="center" mt={4} position="relative">
+        <TextField
+          label="Enter / to Search"
+          variant="outlined"
+          value={inputValue}
+          onChange={handleInputChange}
+          sx={{
+            marginRight: 2,
+            width: '400px',
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '8px',
+            },
+          }}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleExecute}
+        >
+          Execute
+        </Button>
+        {showDropdown && (
+          <List
+            sx={{
+              position: 'absolute',
+              top: '50px',
+              width: '400px',
+              backgroundColor: 'white',
+              border: `1px solid ${grey[300]}`,
+              borderRadius: '8px',
+              boxShadow: 3,
+              zIndex: 1,
+            }}
+          >
+            {commands.map((command, index) => (
+              <ListItem key={index} disablePadding>
+                <ListItemButton onClick={() => handleCommandClick(command)}>
+                  <ListItemText primary={command} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        )}
+      </Box>
+
+      <Grid container spacing={3} justifyContent="center" mt={3}>
         {/* Upcoming Appointments Card */}
         <Grid item xs={12} sm={6} md={4}>
           <Card sx={{ boxShadow: 4, borderRadius: 3, height: '100%' }}>
@@ -134,14 +207,38 @@ const Home: React.FC = () => {
                   </TableHead>
                   <TableBody>
                     {upcomingAppointments.map((appointment, index) => (
-                      <TableRow key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: grey[200] }, '&:hover': { backgroundColor: blue[50] } }}>
+                      <TableRow
+                        key={index}
+                        sx={{
+                          '&:nth-of-type(odd)': { backgroundColor: grey[200] },
+                          '&:hover': { backgroundColor: blue[50] },
+                        }}
+                      >
                         <TableCell>{appointment.name}</TableCell>
                         <TableCell>{appointment.date}</TableCell>
                         <TableCell>{appointment.time}</TableCell>
-                        <TableCell sx={{ color: appointment.urgency === 'High' ? red[600] : appointment.urgency === 'Medium' ? orange[600] : green[600] }}>
+                        <TableCell
+                          sx={{
+                            color:
+                              appointment.urgency === 'High'
+                                ? red[600]
+                                : appointment.urgency === 'Medium'
+                                ? orange[600]
+                                : green[600],
+                          }}
+                        >
                           {appointment.urgency}
                         </TableCell>
-                        <TableCell sx={{ color: appointment.status === 'Confirmed' ? green[600] : appointment.status === 'Pending' ? orange[600] : red[600] }}>
+                        <TableCell
+                          sx={{
+                            color:
+                              appointment.status === 'Confirmed'
+                                ? green[600]
+                                : appointment.status === 'Pending'
+                                ? orange[600]
+                                : red[600],
+                          }}
+                        >
                           {appointment.status}
                         </TableCell>
                       </TableRow>
@@ -155,8 +252,23 @@ const Home: React.FC = () => {
 
         {/* Total Patients Card */}
         <Grid item xs={12} sm={6} md={4}>
-          <Card sx={{ boxShadow: 4, borderRadius: 3, height: '100%', display: 'flex', flexDirection: 'column' }}>
-            <CardContent sx={{ padding: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Card
+            sx={{
+              boxShadow: 4,
+              borderRadius: 3,
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <CardContent
+              sx={{
+                padding: 3,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
               <Avatar sx={{ bgcolor: purple[500], width: 80, height: 80, mr: 2 }}>
                 <PersonIcon sx={{ fontSize: 55, color: 'white' }} />
               </Avatar>
@@ -169,9 +281,18 @@ const Home: React.FC = () => {
                 </Typography>
               </Box>
             </CardContent>
-            <CardContent sx={{ padding: 3, textAlign: 'center', bgcolor: grey[200], borderRadius: 0, flexGrow: 1 }}>
+            <CardContent
+              sx={{
+                padding: 3,
+                textAlign: 'center',
+                bgcolor: grey[200],
+                borderRadius: 0,
+                flexGrow: 1,
+              }}
+            >
               <Typography variant="body2" color="text.secondary">
-                This number reflects the total patients currently under care, highlighting our commitment to community health.
+                This number reflects the total patients currently under care, highlighting our
+                commitment to community health.
               </Typography>
             </CardContent>
           </Card>
@@ -195,36 +316,16 @@ const Home: React.FC = () => {
                 <Line type="monotone" dataKey="worsened" stroke={pink[500]} />
               </LineChart>
             </Box>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ display: 'flex', justifyContent: 'center' }}
+            >
               Monthly patient progress trends
             </Typography>
           </CardContent>
         </Card>
       </Grid>
-
-      {/* Input field and Execute button */}
-      <Box display="flex" justifyContent="center" mt={4}>
-        <TextField
-          label="Enter / to Search"
-          variant="outlined"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          sx={{ 
-            marginRight: 2, 
-            width: '400px', // Increase the width as needed
-            '& .MuiOutlinedInput-root': {
-              borderRadius: '8px' // Adjust the border radius
-            }
-          }}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleExecute}
-        >
-          Execute
-        </Button>
-      </Box>
 
       {/* Footer */}
       <Box textAlign="center" mt={4}>
