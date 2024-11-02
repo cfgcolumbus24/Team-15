@@ -26,7 +26,7 @@ function Dropdown() {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {['Patients', 'Clinicians', 'Statistics'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -39,7 +39,7 @@ function Dropdown() {
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+        {['Settings', 'Logout'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -55,10 +55,12 @@ function Dropdown() {
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-      <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
-        {DrawerList}
-      </Drawer>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-start', p: 2}}>
+        <Button sx={{color: 'white'}} onClick={toggleDrawer(true)}>Dropdown</Button>
+        <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
+          {DrawerList}
+        </Drawer>
+      </Box>
     </div>
   );
 }

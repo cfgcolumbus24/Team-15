@@ -1,4 +1,5 @@
 import React from 'react';
+import Dropdown from './list.tsx';
 
 import {
   Box,
@@ -74,6 +75,9 @@ const Home: React.FC = () => {
           A comprehensive view of patient statistics and trends
         </Typography>
         
+        {/*Dropdown for toggling options */}
+        <Dropdown />
+
         {/* Icons for Settings and Profile */}
         <Box position="absolute" top={16} right={16} display="flex" gap={2}>
           <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
