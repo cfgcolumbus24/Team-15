@@ -1,31 +1,40 @@
-package com.example.Backend.Cliniation;
+package com.example.Backend.Clinician;
 
-import com.example.Backend.patient.Patient;
+import com.example.Backend.Patient.Patient;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-import java.util.List;
 import jakarta.persistence.*;
-
+import java.util.List;
 
 @Component
-@ConfigurationProperties(prefix = "clination")
-public class Clination {
-    @Id
+@ConfigurationProperties(prefix = "clinician")
+@Entity
+public class Clinician {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private String address;
-    private String speciality;
+    private String specialty;
+
+    @OneToMany
     private List<Patient> clients;
 
-
-    // Constructor
-
-    public Clination() {
+    // Default constructor
+    public Clinician() {
     }
 
     // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -42,12 +51,12 @@ public class Clination {
         this.address = address;
     }
 
-    public String getSpeciality() {
-        return speciality;
+    public String getSpecialty() {
+        return specialty;
     }
 
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
     }
 
     public List<Patient> getClients() {
@@ -56,13 +65,5 @@ public class Clination {
 
     public void setClients(List<Patient> clients) {
         this.clients = clients;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }
