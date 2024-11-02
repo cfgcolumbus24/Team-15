@@ -203,8 +203,8 @@ const Demographics: React.FC = () => {
               <Box display="flex" justifyContent="center" alignItems="center">
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={healthData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-                    <XAxis dataKey="name" label={{ value: 'Health Conditions', position: 'insideBottom', offset: -5 }} />
-                    <YAxis label={{ value: 'Frequency', angle: -90, position: 'insideLeft', offset: -5 }} />
+                    <XAxis dataKey="name" label={{ value: 'Health Condition', position: 'insideBottom', offset: -5 }} />
+                    <YAxis label={{ value: 'Frequency', angle: -90, position: 'insideLeft', offset: -2 }} />
                     <Tooltip wrapperStyle={{ backgroundColor: 'white', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }} />
                     <Bar dataKey="frequency" fill={purple[400]} />
                   </BarChart>
