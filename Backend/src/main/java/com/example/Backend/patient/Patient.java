@@ -142,4 +142,5 @@ public class Patient {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
 }
