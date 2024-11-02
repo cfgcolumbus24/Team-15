@@ -11,12 +11,20 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useNavigate } from "react-router-dom";
+import Demographics from "./demographics";
 
 function Dropdown() {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
+  };
+  
+  const navigate = useNavigate();
+
+  const handleDemographics = () => {
+    navigate("/Demographics");
   };
 
   const DrawerList = (
@@ -27,9 +35,9 @@ function Dropdown() {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {["Patients", "Clinicians", "Statistics"].map((text, index) => (
+        {["Patients", "Clinicians", "Demographics"].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick = {handleDemographics}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
