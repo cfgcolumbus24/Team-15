@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Dropdown from './list.tsx';
 import {
   Box,
@@ -23,35 +23,13 @@ import {
 import { blue, grey, pink, purple, teal } from '@mui/material/colors';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import axios from 'axios';
 
 // Sample data for charts
-const ageData = [
-  { name: '18-25', value: 300 },
-  { name: '26-35', value: 500 },
-  { name: '36-45', value: 200 },
-  { name: '46-60', value: 150 },
-  { name: '60+', value: 100 },
-];
 
-const raceData = [
-  { name: 'White', value: 600 },
-  { name: 'Black', value: 300 },
-  { name: 'Asian', value: 200 },
-  { name: 'Hispanic', value: 100 },
-  { name: 'Other', value: 50 },
-];
 
-const genderData = [
-  { name: 'Male', value: 600 },
-  { name: 'Female', value: 550 },
-];
 
-const incomeData = [
-  { name: 'Low', value: 200 },
-  { name: 'Lower-Middle', value: 300 },
-  { name: 'Upper-Middle', value: 350 },
-  { name: 'High', value: 200 },
-];
+
 
 // Updated sample data for health conditions as a frequency chart
 const healthData = [
@@ -63,6 +41,87 @@ const healthData = [
 ];
 
 const Demographics: React.FC = () => {
+  const url = 'http://localhost:8080/api/v1/'
+  const [ageData, setAgeData] = useState([
+                                   { name: '<18', value: 300 },
+                                   { name: '18-25', value: 300 },
+                                   { name: '26-35', value: 500 },
+                                   { name: '36-45', value: 200 },
+                                   { name: '46-60', value: 150 },
+                                   { name: '60+', value: 100 },
+                                 ])
+  const [raceData, setRaceData] = useState([
+                                             { name: 'White', value: 600 },
+                                             { name: 'Black', value: 300 },
+                                             { name: 'Asian', value: 200 },
+                                             { name: 'Hispanic', value: 100 },
+                                             { name: 'Other', value: 50 },
+                                           ])
+  const [genderData, setGenderData] = useState([
+                                                 { name: 'Male', value: 600 },
+                                                 { name: 'Female', value: 550 },
+                                               ])
+  const [incomeData, setIncomeData] = useState([
+                                                 { name: 'Low', value: 200 },
+                                                 { name: 'Lower-Middle', value: 300 },
+                                                 { name: 'Upper-Middle', value: 350 },
+                                                 { name: 'High', value: 200 },
+                                               ])
+  useEffect(() => {
+      const fetchData = async () => {
+          const response = axios.get(url+ 'patients/demo/age').then(response => {
+                console.log(response)
+                let tempAgeData = ageData
+                tempAgeData[0].value = response.data["<18"]
+                tempAgeData[1].value = response.data["18-25"]
+                tempAgeData[2].value = response.data["26-35"]
+                tempAgeData[3].value = response.data["36-45"]
+                tempAgeData[4].value = response.data["46-60"]
+                tempAgeData[5].value = response.data["60+"]
+                setAgeData(tempAgeData)
+                console.log(ageData)
+            }).catch(error => {
+            alert("Error!")
+            console.error(error);
+        });
+        const secondResponse = axios.get(url+ 'patients/demo/race').then(response => {
+                        console.log(response)
+                        let tempRaceData = []
+                        Object.keys(response.data).forEach((a) => {
+                            tempRaceData.push({name: a, value: response.data[a]})
+                        });
+                        setRaceData(tempRaceData)
+                    }).catch(error => {
+                    alert("Error!")
+                    console.error(error);
+                });
+        const thirdResponse = axios.get(url+ 'patients/demo/gender').then(response => {
+                                console.log(response)
+                                let tempGenderData = []
+                                Object.keys(response.data).forEach((a) => {
+                                    tempGenderData.push({name: a, value: response.data[a]})
+                                });
+                                setGenderData(tempGenderData)
+                            }).catch(error => {
+                            alert("Error!")
+                            console.error(error);
+                        });
+        const fourthResponse = axios.get(url+ 'patients/demo/income').then(response => {
+                                        console.log(response)
+                                        let tempIncomeData = []
+                                        Object.keys(response.data).forEach((a) => {
+                                            tempIncomeData.push({name: a, value: response.data[a]})
+                                        });
+                                        setIncomeData(tempIncomeData)
+                                    }).catch(error => {
+                                    alert("Error!")
+                                    console.error(error);
+                                });
+
+      };
+
+      fetchData();
+      }, []);
   return (
     <Box p={0} bgcolor={grey[100]} minHeight="100vh">
       {/* Header */}
@@ -160,7 +219,7 @@ const Demographics: React.FC = () => {
                   <PieChart>
                     <Pie data={genderData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill={blue[400]} label>
                       {genderData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={[pink[400], blue[400]][index % 2]} />
+                        <Cell key={`cell-${index}`} fill={[blue[400], pink[400]][index % 2]} />
                       ))}
                     </Pie>
                     <Legend layout="vertical" align="right" verticalAlign="middle" />
