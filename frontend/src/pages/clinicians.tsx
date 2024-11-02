@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Dropdown from './list.tsx';
 import {
   Box,
@@ -9,17 +9,33 @@ import {
   IconButton,
 } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { blue, grey, purple, teal, orange } from '@mui/material/colors';
-
+import axios from 'axios'
 // Sample data for clinician information
-const clinicianData = [
-  { name: 'Dr. Smith', position: 'Cardiologist', color: teal[500] },
-  { name: 'Dr. Johnson', position: 'Pediatrician', color: orange[500] },
-  { name: 'Dr. Lee', position: 'Dermatologist', color: purple[500] },
-  { name: 'Dr. Brown', position: 'Neurologist', color: blue[500] },
-];
+const colors = [teal[500], orange[500], purple[500], blue[500]]
 
 const ClinicianOverview: React.FC = () => {
+const [clinicianData, setClinicianData] = useState([])
+useEffect(() => {
+        const url = 'http://localhost:8080/api/v1/'
+        const fetchClinis = async () => {
+            const response = axios.get(url+ 'clinician/all').then(response => {
+                console.log(response)
+                let count = 0
+                let clinis = []
+                response.data.forEach((clini) => {
+                    clinis.push({name: clini.firstName + ' ' + clini.lastName, position: clini.specialty, color: colors[count % colors.length], address: clini.address })
+                    count +=1
+                })
+                setClinicianData(clinis)
+              }).catch(error => {
+                 alert("Error!")
+              console.error(error);
+            });
+        }
+        fetchClinis();
+      }, []);
   return (
     <Box p={0} bgcolor={grey[100]} minHeight="100vh">
       {/* Header */}
@@ -37,7 +53,7 @@ const ClinicianOverview: React.FC = () => {
         <Dropdown />
         
         <Typography variant="h3" fontWeight="bold">
-          Netcare Clinicians
+          Clinician Overview
         </Typography>
         <Typography variant="subtitle1">
           Tracking Clinician Performance and Patient Interactions
@@ -45,6 +61,9 @@ const ClinicianOverview: React.FC = () => {
 
         {/* Icons for Settings and Profile */}
         <Box position="absolute" top={16} right={16} display="flex" gap={2}>
+          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
+            <SettingsIcon sx={{ fontSize: 30 }} />
+          </IconButton>
           <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
             <AccountCircleIcon sx={{ fontSize: 30 }} />
           </IconButton>
@@ -54,15 +73,28 @@ const ClinicianOverview: React.FC = () => {
       <Box p={3} bgcolor={grey[100]} minHeight="100vh">
         <Grid container spacing={3} justifyContent="center">
           {clinicianData.map((clinician, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card sx={{ boxShadow: 4, borderRadius: 3 }}>
-                <CardContent sx={{ padding: 3, textAlign: 'center' }}>
+            <Grid item xs={12} sm={6} md={6} key={index}>
+              <Card 
+                sx={{ 
+                  boxShadow: 4, 
+                  borderRadius: 3, 
+                  height: 200, // Set a fixed height for square shape
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  margin: 'auto' // Center the card
+                }}
+              >
+                <CardContent sx={{ textAlign: 'center' }}>
                   <AccountCircleIcon sx={{ fontSize: 60, color: clinician.color }} />
                   <Typography variant="h6" color="text.primary" gutterBottom>
                     {clinician.name}
                   </Typography>
                   <Typography variant="subtitle1" color="text.secondary">
                     {clinician.position}
+                  </Typography>
+                  <Typography variant="subtitle2" color="text.secondary">
+                                      {clinician.address}
                   </Typography>
                 </CardContent>
               </Card>

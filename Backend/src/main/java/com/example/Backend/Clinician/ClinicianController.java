@@ -30,6 +30,12 @@ public class ClinicianController {
         return clinicianService.getClinicians();
     }
 
+    @GetMapping("/all")
+    public List<Clinician> getAllClinicians() {
+        List<Clinician> cliniList = clinicianService.getClinicians();
+        cliniList.forEach((n) -> {n.getClients().forEach((c) -> {c.setDoctors(null);});});
+        return cliniList;
+    }
     @GetMapping("/name/{name}")
     public List<Clinician> getClinicianByName(@PathVariable String name) {
         List<Clinician> cliniList = clinicianService.getClinicianByName(name);
