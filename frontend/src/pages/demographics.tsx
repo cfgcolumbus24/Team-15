@@ -99,14 +99,15 @@ const Demographics: React.FC = () => {
                 Age Distribution
               </Typography>
               <Box display="flex" justifyContent="center" alignItems="center">
-                <ResponsiveContainer width="70%" height={200}>
+                <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
-                    <Pie data={ageData} dataKey="value" nameKey="name" cx="40%" cy="50%" outerRadius={70} fill={blue[400]} label>
+                    <Pie data={ageData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill={blue[400]} label>
                       {ageData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={[teal[400], pink[300], purple[400], blue[500], grey[400]][index % 5]} />
                       ))}
                     </Pie>
                     <Legend layout="vertical" align="right" verticalAlign="middle" />
+                    <Tooltip wrapperStyle={{ backgroundColor: 'white', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }} />
                   </PieChart>
                 </ResponsiveContainer>
               </Box>
@@ -122,14 +123,15 @@ const Demographics: React.FC = () => {
                 Race Distribution
               </Typography>
               <Box display="flex" justifyContent="center" alignItems="center">
-                <ResponsiveContainer width="70%" height={200}>
+                <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
-                    <Pie data={raceData} dataKey="value" nameKey="name" cx="40%" cy="50%" outerRadius={70} fill={blue[400]} label>
+                    <Pie data={raceData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill={blue[400]} label>
                       {raceData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={[blue[500], grey[400], purple[400], teal[300], pink[300]][index % 5]} />
                       ))}
                     </Pie>
                     <Legend layout="vertical" align="right" verticalAlign="middle" />
+                    <Tooltip wrapperStyle={{ backgroundColor: 'white', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }} />
                   </PieChart>
                 </ResponsiveContainer>
               </Box>
@@ -145,14 +147,15 @@ const Demographics: React.FC = () => {
                 Gender Distribution
               </Typography>
               <Box display="flex" justifyContent="center" alignItems="center">
-                <ResponsiveContainer width="70%" height={200}>
+                <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
-                    <Pie data={genderData} dataKey="value" nameKey="name" cx="40%" cy="50%" outerRadius={70} fill={blue[400]} label>
+                    <Pie data={genderData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill={blue[400]} label>
                       {genderData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={[pink[400], blue[400]][index % 2]} />
                       ))}
                     </Pie>
                     <Legend layout="vertical" align="right" verticalAlign="middle" />
+                    <Tooltip wrapperStyle={{ backgroundColor: 'white', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }} />
                   </PieChart>
                 </ResponsiveContainer>
               </Box>
@@ -167,14 +170,16 @@ const Demographics: React.FC = () => {
               <Typography variant="h6" color="text.secondary" gutterBottom>
                 Income Level Distribution
               </Typography>
-              <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={incomeData}>
-                  <XAxis dataKey="name" label={{ value: 'Income Level', position: 'insideBottom', offset: -5 }} />
-                  <YAxis label={{ value: 'Number of People', angle: -90, position: 'insideLeft', offset: -5 }} />
-                  <Tooltip />
-                  <Bar dataKey="value" fill={teal[400]} />
-                </BarChart>
-              </ResponsiveContainer>
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={incomeData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                    <XAxis dataKey="name" label={{ value: 'Income Level', position: 'insideBottom', offset: -5 }} />
+                    <YAxis label={{ value: 'Number of People', angle: -90, position: 'insideLeft', offset: -5 }} />
+                    <Tooltip wrapperStyle={{ backgroundColor: 'white', border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }} />
+                    <Bar dataKey="value" fill={teal[400]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </Box>
             </CardContent>
           </Card>
         </Grid>
