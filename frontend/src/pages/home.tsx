@@ -146,8 +146,8 @@ const Home: React.FC = () => {
         <Grid item xs={12} sm={6} md={4}>
           <Card sx={{ boxShadow: 4, borderRadius: 3, height: '100%', display: 'flex', flexDirection: 'column' }}>
             <CardContent sx={{ padding: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Avatar sx={{ bgcolor: purple[500], width: 64, height: 64, mr: 2 }}>
-                <PersonIcon sx={{ fontSize: 40, color: 'white' }} />
+              <Avatar sx={{ bgcolor: purple[500], width: 80, height: 80, mr: 2 }}>
+                <PersonIcon sx={{ fontSize: 55, color: 'white' }} />
               </Avatar>
               <Box textAlign="left">
                 <Typography variant="h6" color="text.secondary">
