@@ -25,7 +25,6 @@ import {
 import { blue, grey, pink, purple, teal } from '@mui/material/colors';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-<<<<<<< HEAD
 import axios from 'axios';
 // Sample nonprofit financial data
 

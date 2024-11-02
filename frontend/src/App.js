@@ -6,7 +6,8 @@ import Demographics from './pages/demographics.tsx';
 import Patients from './pages/users.tsx';
 import Patient from './pages/patient.tsx';
 import Financials from './pages/financials.tsx';
-import PlainText from './pages/plaintext.tsx';  // Add this line
+import PlainText from './pages/plaintext.tsx';
+import ClinicianOverview from './pages/clinicians.tsx';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/demographics" element={<Demographics />} />
         <Route path="/financials" element={<Financials />} />
         <Route path="/plaintext" element={<PlainText />} />
+        <Route path="/clinicians" element={<ClinicianOverview />} />
       </Routes>
     </Router>
   );
