@@ -14,6 +14,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  IconButton,
 } from '@mui/material';
 import {
   LineChart,
@@ -22,8 +23,10 @@ import {
   YAxis,
   Tooltip,
 } from 'recharts';
-import { pink, blue, green, orange, purple, grey } from '@mui/material/colors';
+import { pink, blue, green, orange, purple, grey, red } from '@mui/material/colors';
 import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 // Sample hardcoded data
 const totalPatients = 1200;
@@ -61,6 +64,7 @@ const Home: React.FC = () => {
           background: `linear-gradient(135deg, ${blue[800]} 30%, ${blue[600]} 90%)`,
           color: 'white',
           borderRadius: 0,
+          position: 'relative',
         }}
       >
         <Typography variant="h3" fontWeight="bold">
@@ -69,6 +73,16 @@ const Home: React.FC = () => {
         <Typography variant="subtitle1">
           A comprehensive view of patient statistics and trends
         </Typography>
+        
+        {/* Icons for Settings and Profile */}
+        <Box position="absolute" top={16} right={16} display="flex" gap={2}>
+          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[600] } }}>
+            <SettingsIcon sx={{ fontSize: 30 }} />
+          </IconButton>
+          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[600] } }}>
+            <AccountCircleIcon sx={{ fontSize: 30 }} />
+          </IconButton>
+        </Box>
       </Box>
 
       <Grid container spacing={3} justifyContent="center">
@@ -81,23 +95,27 @@ const Home: React.FC = () => {
               </Typography>
               <TableContainer component={Paper}>
                 <Table size="small">
-                  <TableHead>
+                  <TableHead sx={{ backgroundColor: blue[600] }}>
                     <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Date</TableCell>
-                      <TableCell>Time</TableCell>
-                      <TableCell>Urgency</TableCell>
-                      <TableCell>Status</TableCell>
+                      <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Name</TableCell>
+                      <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Date</TableCell>
+                      <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Time</TableCell>
+                      <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Urgency</TableCell>
+                      <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Status</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {upcomingAppointments.map((appointment, index) => (
-                      <TableRow key={index}>
+                      <TableRow key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: grey[200] }, '&:hover': { backgroundColor: blue[50] } }}>
                         <TableCell>{appointment.name}</TableCell>
                         <TableCell>{appointment.date}</TableCell>
                         <TableCell>{appointment.time}</TableCell>
-                        <TableCell>{appointment.urgency}</TableCell>
-                        <TableCell>{appointment.status}</TableCell>
+                        <TableCell sx={{ color: appointment.urgency === 'High' ? red[600] : appointment.urgency === 'Medium' ? orange[600] : green[600] }}>
+                          {appointment.urgency}
+                        </TableCell>
+                        <TableCell sx={{ color: appointment.status === 'Confirmed' ? green[600] : appointment.status === 'Pending' ? orange[600] : red[600] }}>
+                          {appointment.status}
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -134,7 +152,7 @@ const Home: React.FC = () => {
 
       {/* Patient Progress Card */}
       <Grid item xs={12} mt={4} display="flex" justifyContent="center">
-        <Card sx={{ boxShadow: 4, borderRadius: 3, width: '70%' }}>
+        <Card sx={{ boxShadow: 4, borderRadius: 3, width: '66.2%' }}>
           <CardContent sx={{ padding: 3 }}>
             <Typography variant="h6" color="text.secondary" gutterBottom>
               Patient Progress Over Time
