@@ -1,0 +1,51 @@
+import React, { useState } from 'react';
+
+const patientsData = [
+  { id: 1, name: 'John Doe', age: 30, condition: 'Flu' },
+  { id: 2, name: 'Jane Smith', age: 25, condition: 'Cold' },
+  { id: 3, name: 'Michael Johnson', age: 40, condition: 'Allergy' },
+  { id: 4, name: 'Emily Davis', age: 35, condition: 'Headache' },
+];
+
+const PatientSearch = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedPatient, setSelectedPatient] = useState(null);
+
+  const filteredPatients = patientsData.filter((patient) =>
+    patient.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handlePatientClick = (patient) => {
+    setSelectedPatient(patient);
+  };
+
+  return (
+    <div>
+      <h1>Patient Search</h1>
+      <input
+        type="text"
+        placeholder="Search for a patient..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <ul>
+        {filteredPatients.map((patient) => (
+          <li key={patient.id} onClick={() => handlePatientClick(patient)}>
+            {patient.name}
+          </li>
+        ))}
+      </ul>
+
+      {selectedPatient && (
+        <div>
+          <h2>Patient Details</h2>
+          <p>Name: {selectedPatient.name}</p>
+          <p>Age: {selectedPatient.age}</p>
+          <p>Condition: {selectedPatient.condition}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default PatientSearch;
