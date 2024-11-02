@@ -14,8 +14,8 @@ import { usePDF } from 'react-to-pdf';
 
 function Patient() {
   const { patientName } = useParams();
-  const contentRef = useRef(null);
-  const { toPDF, targetRef } = usePDF({filename: `${patientName}-medical-chart.pdf`});
+  useRef(null);
+  const { toPDF, targetRef } = usePDF({ filename: `${patientName}-medical-chart.pdf` });
 
   return (
     <Box p={0} bgcolor={grey[100]} minHeight="100vh">
@@ -32,7 +32,7 @@ function Patient() {
         }}
       >
         <Dropdown />
-        
+
         <Typography variant="h3" fontWeight="bold">
           Patient Information
         </Typography>
@@ -42,11 +42,11 @@ function Patient() {
 
         {/* Icons for Settings, Profile, and PDF Download */}
         <Box position="absolute" top={16} right={16} display="flex" gap={2}>
-          <IconButton 
+          <IconButton
             onClick={() => toPDF()}
-            sx={{ 
-              color: 'white', 
-              '&:hover': { 
+            sx={{
+              color: 'white',
+              '&:hover': {
                 backgroundColor: blue[300],
                 transform: 'scale(1.1)',
               },

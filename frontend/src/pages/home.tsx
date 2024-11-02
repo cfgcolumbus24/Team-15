@@ -37,21 +37,6 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
 
-const patientProgressData = [
-  { month: "Jan", improved: 70, stable: 25, worsened: 5 },
-  { month: "Feb", improved: 72, stable: 22, worsened: 6 },
-  { month: "Mar", improved: 75, stable: 20, worsened: 5 },
-  { month: "Apr", improved: 78, stable: 18, worsened: 4 },
-  { month: "May", improved: 80, stable: 15, worsened: 5 },
-  { month: "Jun", improved: 82, stable: 13, worsened: 5 },
-  { month: "Jul", improved: 85, stable: 10, worsened: 5 },
-  { month: "Aug", improved: 88, stable: 8, worsened: 4 },
-  { month: "Sep", improved: 90, stable: 6, worsened: 4 },
-  { month: "Oct", improved: 92, stable: 5, worsened: 3 },
-  { month: "Nov", improved: 95, stable: 3, worsened: 2 },
-  { month: "Dec", improved: 97, stable: 2, worsened: 1 },
-];
-
 const upcomingAppointments = [
   {
     name: "John Doe",
@@ -152,9 +137,9 @@ const Home: React.FC = () => {
         const monthData = data[key];
         return {
           month: monthMap[Number(key)],
-          improved: monthData[0],
-          stable: monthData[1],
-          worsened: monthData[2],
+          improved: monthData[1],
+          stable: monthData[2],
+          worsened: monthData[0],
         };
       });
 

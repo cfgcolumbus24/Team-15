@@ -124,16 +124,15 @@ const ClinicianOverview: React.FC = () => {
             </Grid>
           ))}
         </Grid>
-
-        {/* Footer */}
-        <Box textAlign="center" mt={4}>
-          <Typography variant="caption" color="text.secondary">
-            Netcare 2024
-          </Typography>
+                {/* Footer */}
+                <Box textAlign="center" mt={4}>
+                    <Typography variant="caption" color="text.secondary">
+                        Netcare 2024
+                    </Typography>
+                </Box>
+            </Box>
         </Box>
-      </Box>
-    </Box>
-  );
+    );
 };
 
 export default ClinicianOverview;

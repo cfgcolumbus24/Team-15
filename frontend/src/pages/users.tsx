@@ -78,7 +78,7 @@ const Patients: React.FC = () => {
       historyFilter === '' || patient.history.toLowerCase().includes(historyFilter.toLowerCase());
 
     return matchesSearchTerm && matchesMinAgeFilter && matchesMaxAgeFilter && matchesGenderFilter &&
-           matchesRaceFilter && matchesIncomeFilter && matchesHistoryFilter;
+      matchesRaceFilter && matchesIncomeFilter && matchesHistoryFilter;
   });
 
   const handlePatientClick = (patientName: string) => {
@@ -212,11 +212,11 @@ const Patients: React.FC = () => {
           ))}
         </Box>
         {/* Footer */}
-      <Box textAlign="center" mt={4}>
-        <Typography variant="caption" color="text.secondary">
-          Netcare 2024
-        </Typography>
-      </Box>
+        <Box textAlign="center" mt={4}>
+          <Typography variant="caption" color="text.secondary">
+            Netcare 2024
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
