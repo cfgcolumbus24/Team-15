@@ -32,4 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 .cursorrules/
-.application.properties/
+
+src/main/resources/application.properties
+
+src/main/resources/application.properties
