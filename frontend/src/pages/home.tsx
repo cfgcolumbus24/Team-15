@@ -1,4 +1,6 @@
-import React from 'react';
+
+
+import React, { useState, useEffect } from 'react';
 import Dropdown from './list.tsx';
 
 import {
@@ -29,8 +31,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-// Sample hardcoded data
-const totalPatients = 1200;
 const patientProgressData = [
   { month: 'Jan', improved: 70, stable: 25, worsened: 5 },
   { month: 'Feb', improved: 72, stable: 22, worsened: 6 },
@@ -54,6 +54,26 @@ const upcomingAppointments = [
 ];
 
 const Home: React.FC = () => {
+  const [totalPatients, setTotalPatients] = useState<number>(0);
+
+  useEffect(() => {
+    fetchTotalPatients();
+  }, []);
+
+  const fetchTotalPatients = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/patients/all');
+      if (!response.ok) {
+        throw new Error('Failed to fetch patients');
+      }
+      const data = await response.json();
+      setTotalPatients(data.length);
+    } catch (error) {
+      console.error('Error fetching total patients:', error);
+      setTotalPatients(0);
+    }
+  };
+
   return (
     <Box p={0} bgcolor={grey[100]} minHeight="100vh">
       {/* Header */}
@@ -62,32 +82,31 @@ const Home: React.FC = () => {
         mb={4}
         p={3}
         sx={{
-            background: `linear-gradient(135deg, ${blue[800]} 30%, ${blue[600]} 90%)`,
-            color: 'white',
-            borderRadius: 0,
-            position: 'relative',
+          background: `linear-gradient(135deg, ${blue[800]} 30%, ${blue[600]} 90%)`,
+          color: 'white',
+          borderRadius: 0,
+          position: 'relative',
         }}
-        >
-        <Dropdown /> {/* Rendered with fixed positioning */}
+      >
+        <Dropdown />
         
         <Typography variant="h3" fontWeight="bold">
-            Netcare Clinician Dashboard
+          Netcare Clinician Dashboard
         </Typography>
         <Typography variant="subtitle1">
-            A comprehensive view of patient statistics and trends
+          A comprehensive view of patient statistics and trends
         </Typography>
 
         {/* Icons for Settings and Profile */}
         <Box position="absolute" top={16} right={16} display="flex" gap={2}>
-            <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
+          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
             <SettingsIcon sx={{ fontSize: 30 }} />
-            </IconButton>
-            <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
+          </IconButton>
+          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
             <AccountCircleIcon sx={{ fontSize: 30 }} />
-            </IconButton>
+          </IconButton>
         </Box>
-        </Box>
-
+      </Box>
 
       <Grid container spacing={3} justifyContent="center">
         {/* Upcoming Appointments Card */}
