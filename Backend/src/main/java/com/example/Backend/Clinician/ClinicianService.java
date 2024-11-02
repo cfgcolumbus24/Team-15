@@ -6,6 +6,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
+import com.example.Backend.patient.Patient;
+import com.example.Backend.patient.PatientRepository;
+
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class ClinicianService {
@@ -13,7 +18,7 @@ public class ClinicianService {
     private final ClinicianRepository clinicianRepository;
 
     @Autowired
-    public ClinicianService(ClinicianRepository clinicianRepository) {
+    public ClinicianService(ClinicianRepository clinicianRepository, PatientRepository patientRepository) {
         this.clinicianRepository = clinicianRepository;
     }
 
@@ -42,5 +47,8 @@ public class ClinicianService {
 
     public Clinician getClinicianById(int id) {
         return clinicianRepository.findById(id);
+    }
+    public Set<Patient> getClinicianPatients(String id) {
+        return clinicianRepository.findById(Integer.parseInt(id)).getClients();
     }
 }
