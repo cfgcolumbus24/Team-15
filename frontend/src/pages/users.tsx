@@ -39,7 +39,7 @@ const Patients: React.FC = () => {
             key={user.id}
             style={{ textDecoration: 'none' }}
             target="_blank" // Open in a new tab
-            rel="noopener noreferrer" // Security best practice
+            rel="noopener noreferrer" 
           >
             <Card
               sx={{ marginBottom: 2, padding: 2, borderRadius: 2, cursor: 'pointer', backgroundColor: '#e3f2fd' }}
