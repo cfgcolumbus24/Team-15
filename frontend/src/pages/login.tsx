@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { SnackbarCloseReason } from "@mui/material/Snackbar";
+import axios from 'axios';
 
 const LoginFinal = () => {
   const navigate = useNavigate();
@@ -18,19 +19,30 @@ const LoginFinal = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success'); // Type for severity
-
+  const url = 'http://localhost:8080/api/v1/'
   const handleLogin = () => {
-    const isLoginSuccessful = true;
-
-    if (isLoginSuccessful) {
-      setSnackbarMessage('Login successful!');
-      setSnackbarSeverity('success');
-      navigate("/Home", { state: { message: 'Login successful!', severity: 'success' } });
-    } else {
-      setSnackbarMessage('Invalid login credentials!');
-      setSnackbarSeverity('error');
-    }
-    setOpenSnackbar(true); 
+    const usernameBox = document.getElementsByName("username")[0] as HTMLInputElement;
+    const firstName = usernameBox.value;
+    console.log(firstName)
+    const passwordBox = document.getElementsByName("password")[0] as HTMLInputElement;
+    const lastName = passwordBox.value;
+    axios.post(url + 'clinician/login', {firstName: firstName, lastName: lastName} )
+        .then(response => {
+           setSnackbarMessage('Login successful!');
+           setSnackbarSeverity('success');
+           setOpenSnackbar(true);
+           navigate("/Home", { state: { message: 'Login successful!', severity: 'success' } });
+        }).catch(error => {
+            console.log(error)
+            if(error.response.status === 401) {
+                setSnackbarMessage('Invalid login credentials!');
+                setSnackbarSeverity('error');
+                setOpenSnackbar(true);
+            } else {
+                alert("Something went wrong, try again!")
+            }
+            console.error(error);
+        });
   };
 
   const handleCloseSnackbar = (event: React.SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
