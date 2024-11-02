@@ -71,32 +71,32 @@ const Demographics: React.FC = () => {
         mb={4}
         p={3}
         sx={{
-          background: `linear-gradient(135deg, ${blue[800]} 30%, ${blue[600]} 90%)`,
-          color: 'white',
-          borderRadius: 0,
-          position: 'relative',
+            background: `linear-gradient(135deg, ${blue[800]} 30%, ${blue[600]} 90%)`,
+            color: 'white',
+            borderRadius: 0,
+            position: 'relative',
         }}
-      >
+        >
+        <Dropdown /> {/* Rendered with fixed positioning */}
+        
         <Typography variant="h3" fontWeight="bold">
-          Netcare Demographics Dashboard
+        Netcare Demographics
         </Typography>
         <Typography variant="subtitle1">
-          Analyzing Patient Demographics and Distribution
+        Analyzing Patient Demographics and Distribution
         </Typography>
-
-        {/* Dropdown for toggling options */}
-        <Dropdown />
 
         {/* Icons for Settings and Profile */}
         <Box position="absolute" top={16} right={16} display="flex" gap={2}>
-          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
+            <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
             <SettingsIcon sx={{ fontSize: 30 }} />
-          </IconButton>
-          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
+            </IconButton>
+            <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
             <AccountCircleIcon sx={{ fontSize: 30 }} />
-          </IconButton>
+            </IconButton>
         </Box>
-      </Box>
+        </Box>
+    <Box p={3} bgcolor={grey[100]} minHeight="100vh">
 
       {/* Demographics Cards */}
       <Grid container spacing={3} justifyContent="center">
@@ -214,6 +214,7 @@ const Demographics: React.FC = () => {
           </Card>
         </Grid>
       </Grid>
+    </Box>
     </Box>
   );
 };
