@@ -15,10 +15,10 @@ import { SnackbarCloseReason } from "@mui/material/Snackbar";
 const LoginFinal = () => {
   const navigate = useNavigate();
 
-  // State for managing Snackbar
+  
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success'); // Type for severity
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
 
   const handleLogin = () => {
     const isLoginSuccessful = true;
@@ -133,7 +133,7 @@ const LoginFinal = () => {
       </Sheet>
 
       {/* Snackbar for alerts */}
-      <Snackbar open={openSnackbar} autoHideDuration={2200} onClose={handleCloseSnackbar}>
+      <Snackbar open={openSnackbar} autoHideDuration={1900} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }} style={{ backgroundColor: snackbarSeverity === 'success' ? '#4caf50' : '#f44336' }}>
           {snackbarMessage}
         </Alert>

@@ -192,7 +192,7 @@ const Home: React.FC = () => {
       </Grid>
 
       {/* Snackbar for feedback messages */}
-      <Snackbar open={open} autoHideDuration={2200} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={1900} onClose={handleClose}>
         <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
           {message}
         </Alert>
