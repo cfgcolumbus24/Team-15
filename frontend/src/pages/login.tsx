@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react"; // Import useState to manage alert state
 import Sheet from "@mui/joy/Sheet";
 import CssBaseline from "@mui/joy/CssBaseline";
 import Typography from "@mui/joy/Typography";
@@ -7,12 +8,37 @@ import FormLabel from "@mui/joy/FormLabel";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import { useNavigate } from "react-router-dom";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import { SnackbarCloseReason } from "@mui/material/Snackbar";
 
 const LoginFinal = () => {
   const navigate = useNavigate();
 
+  // State for managing Snackbar
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success'); // Type for severity
+
   const handleLogin = () => {
-    navigate("/Home");
+    const isLoginSuccessful = true;
+
+    if (isLoginSuccessful) {
+      setSnackbarMessage('Login successful!');
+      setSnackbarSeverity('success');
+      navigate("/Home", { state: { message: 'Login successful!', severity: 'success' } });
+    } else {
+      setSnackbarMessage('Invalid login credentials!');
+      setSnackbarSeverity('error');
+    }
+    setOpenSnackbar(true);
+  };
+
+  const handleCloseSnackbar = (event: React.SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
+    if (reason === 'clickaway') {
+      return; 
+    }
+    setOpenSnackbar(false);
   };
 
   return (
@@ -105,6 +131,13 @@ const LoginFinal = () => {
           Log in 
         </Button>
       </Sheet>
+
+      {/* Snackbar for alerts */}
+      <Snackbar open={openSnackbar} autoHideDuration={2200} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }} style={{ backgroundColor: snackbarSeverity === 'success' ? '#4caf50' : '#f44336' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </main>
   );
 }
