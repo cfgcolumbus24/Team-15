@@ -26,7 +26,6 @@ import { blue, grey, pink, purple, teal } from '@mui/material/colors';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-// Sample nonprofit financial data
 const budgetAllocationData = [
   { category: 'Program Services', amount: 80000 },
   { category: 'Fundraising', amount: 15000 },
