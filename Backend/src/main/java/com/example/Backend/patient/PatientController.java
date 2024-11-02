@@ -16,6 +16,7 @@ public class PatientController {
 
     @GetMapping("/")
     public @ResponseBody String getPatient(@RequestParam int id) {
+        //patientRepository.save(new Patient("John Doe", 10, "5'6\"", 165, 20.1, "Asian", "M", 100,  "None"));
         return "Hello World!";
     }
 }

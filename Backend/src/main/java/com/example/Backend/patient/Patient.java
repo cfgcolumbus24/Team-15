@@ -42,7 +42,7 @@ public class Patient {
         this.history = "";
     }
 
-    public Patient(String name, int age, String height, int weight, float BMI, String race, String sex, int income, String history) {
+    public Patient(String name, int age, String height, int weight, double BMI, String race, String sex, int income, String history) {
         this.name = name;
         this.age = age;
         this.height = height;
