@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "parseInput",
+            "request": "launch",
+            "mainClass": "com.example.Backend.scripts.parseInput",
+            "projectName": "Backend"
+        },
+        {
+            "type": "java",
             "name": "BackendApplication",
             "request": "launch",
             "mainClass": "com.example.Backend.BackendApplication",

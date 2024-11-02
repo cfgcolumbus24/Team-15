@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-
 @RestController
 @RequestMapping("/api/v1/patients")
 @CrossOrigin(origins = "*")
@@ -19,23 +18,62 @@ public class PatientController {
     @Autowired
     private ClinicianRepository clinicianRepository;
 
+    @Autowired
+    private PatientProgressRepository patientProgressRepository;
+
     @GetMapping("/")
     public @ResponseBody String getPatient() {
         return "Hello World!";
     }
+
     @GetMapping("/all")
     public List<Patient> getAllPatients() {
 
         List<Patient> patientList = (List<Patient>) patientRepository.findAll();
-        patientList.forEach((n) -> {n.getDoctors().forEach((i) -> {i.setClients(null);});});
+        patientList.forEach((n) -> {
+            n.getDoctors().forEach((i) -> {
+                i.setClients(null);
+            });
+        });
         return patientList;
     }
 
     @GetMapping("/{name}")
     public Patient getPatientByName(@PathVariable String name) {
         Patient p = patientRepository.findPatientByName(name);
-        p.getDoctors().forEach((n) -> {n.setClients(null);});
+        p.getDoctors().forEach((n) -> {
+            n.setClients(null);
+        });
         return p;
+    }
+
+    @GetMapping("/progress")
+    public HashMap<Integer, int[]> getProgress() {
+        HashMap<Integer, int[]> counts = new HashMap<>();
+        for (int i = 0; i < 12; i++) {
+            counts.put(i, new int[3]);
+        }
+
+        List<PatientProgress> patientList = (List<PatientProgress>) patientProgressRepository.findAll();
+
+        for (PatientProgress p : patientList) {
+            int key = p.getMonth();
+            double lastMonth = p.getLastMonth();
+            double thisMonth = p.getCurrentMonth();
+
+            int[] oldArr = counts.get(key);
+
+            if (thisMonth > lastMonth) {
+                oldArr[0]++;
+            } else if (lastMonth > thisMonth) {
+                oldArr[1]++;
+            } else {
+                oldArr[2]++;
+            }
+        }
+
+        return counts;
+
     }
 
     @GetMapping("/demo/{demographic}")
@@ -106,7 +144,7 @@ public class PatientController {
                     demographics.put(ageString, demographics.get(ageString) + 1);
                 }
             });
-        } else if (demographic.equals("income")){
+        } else if (demographic.equals("income")) {
             List<Patient> patientList = new ArrayList<>();
             patientRepository.findAll().forEach(patientList::add);
             count = patientList.size();
@@ -139,6 +177,5 @@ public class PatientController {
 
         return demographics;
     }
-
 
 }
