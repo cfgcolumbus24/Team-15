@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, TextField, Card, CardContent, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 interface User {
   id: number;
@@ -7,7 +8,7 @@ interface User {
   age: number;
 }
 
-const Home: React.FC = () => {
+const Patients: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [users] = useState<User[]>([
     { id: 1, name: 'John Doe', age: 30 },
@@ -20,7 +21,7 @@ const Home: React.FC = () => {
   );
 
   return (
-    <Box sx={{ padding: 3 }}>
+    <Box sx={{ padding: 3, backgroundColor: 'white' }}>
       <Typography variant="h4" gutterBottom>
         Netcare Access
       </Typography>
@@ -34,19 +35,20 @@ const Home: React.FC = () => {
       />
       <Box>
         {filteredUsers.map((user) => (
-          <Card
-            key={user.id}
-            sx={{ marginBottom: 2, padding: 2, borderRadius: 2 }}
-          >
-            <CardContent>
-              <Typography variant="h6">{user.name}</Typography>
-              <Typography color="textSecondary">Age: {user.age}</Typography>
-            </CardContent>
-          </Card>
+          <Link to={`/user/${user.id}`} key={user.id} style={{ textDecoration: 'none' }}>
+            <Card
+              sx={{ marginBottom: 2, padding: 2, borderRadius: 2, cursor: 'pointer', backgroundColor: '#e3f2fd' }}
+            >
+              <CardContent>
+                <Typography variant="h6">{user.name}</Typography>
+                <Typography color="textSecondary">Age: {user.age}</Typography>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </Box>
     </Box>
   );
 };
 
-export default Home;
+export default Patients;

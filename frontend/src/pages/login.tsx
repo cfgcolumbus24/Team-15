@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useColorScheme } from "@mui/joy/styles";
 import Sheet from "@mui/joy/Sheet";
 import CssBaseline from "@mui/joy/CssBaseline";
 import Typography from "@mui/joy/Typography";
@@ -7,91 +6,99 @@ import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
-import Link from "@mui/joy/Link";
-import Select from "@mui/joy/Select";
-import Option from "@mui/joy/Option";
+import { useNavigate } from "react-router-dom";
 
-function ModeToggle() {
-  const { mode, setMode } = useColorScheme();
-  const [mounted, setMounted] = React.useState(false);
+const LoginFinal = () => {
+  const navigate = useNavigate();
 
-  // necessary for server-side rendering
-  // because mode is undefined on the server
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return <Button variant="soft">Change mode</Button>;
-  }
+  const handleLogin = () => {
+    navigate("/Home");
+  };
 
   return (
-    <Select
-      variant="soft"
-      value={mode}
-      onChange={(event, newMode) => {
-        setMode(newMode);
+    <main
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start", 
+        justifyContent: "flex-start", 
+        height: "100vh",
+        backgroundColor: "#f5f5f5",
+        padding: "20px", 
       }}
-      sx={{ width: "max-content" }}
     >
-      <Option value="system">System</Option>
-      <Option value="light">Light</Option>
-      <Option value="dark">Dark</Option>
-    </Select>
-  );
-}
-
-export default function LoginFinal() {
-  return (
-    <main>
-      <ModeToggle />
       <CssBaseline />
+      <Typography
+        level="h2"
+        component="h1"
+        sx={{ 
+          fontWeight: "bold", 
+          fontSize: "2.5rem", 
+          mb: 2 
+        }}
+      >
+        Netcare
+      </Typography>
       <Sheet
         sx={{
-          width: 300,
-          mx: "auto", // margin left & right
-          my: 4, // margin top & bottom
-          py: 3, // padding top & bottom
-          px: 2, // padding left & right
+          width: 500, 
+          height: 450, 
+          mx: "auto",
+          my: 0, 
+          py: 4,
+          px: 4,
           display: "flex",
           flexDirection: "column",
           gap: 2,
-          borderRadius: "sm",
-          boxShadow: "md",
+          borderRadius: "md",
+          boxShadow: "lg",
+          marginTop: "160px", 
         }}
         variant="outlined"
       >
-        <div>
-          <Typography level="h4" component="h1">
-            <b>Welcome!</b>
-          </Typography>
-          <Typography level="body-sm">Sign in to continue.</Typography>
-        </div>
+        <Typography level="body-md" textAlign="center" sx={{ mb: -1.5, fontWeight: "bold",  fontSize: "2.2rem"}}>
+          Welcome!
+        </Typography>
+        <Typography level="body-md" textAlign="center" sx={{ mb: 3 }}>
+          Please sign in to continue.
+        </Typography>
         <FormControl>
-          <FormLabel>Email</FormLabel>
+          <FormLabel>Username</FormLabel>
           <Input
-            // html input attribute
-            name="email"
-            type="email"
-            placeholder="johndoe@email.com"
+            name="username"
+            type="text"
+            placeholder="johndoe"
+            sx={{
+              height: '48px', 
+              fontSize: '1rem', 
+            }}
           />
         </FormControl>
         <FormControl>
           <FormLabel>Password</FormLabel>
           <Input
-            // html input attribute
             name="password"
             type="password"
             placeholder="password"
+            sx={{
+              height: '48px', 
+              fontSize: '1rem', 
+            }}
           />
         </FormControl>
-        <Button sx={{ mt: 1 /* margin top */ }}>Log in</Button>
-        <Typography
-          endDecorator={<Link href="/sign-up">Sign up</Link>}
-          sx={{ fontSize: "sm", alignSelf: "center" }}
+        <Button 
+          sx={{
+            mt: 2, 
+            height: '48px',
+            fontSize: '1rem',
+          }} 
+          onClick={handleLogin}
         >
-          Don&apos;t have an account?
-        </Typography>
+          Log in 
+        </Button>
       </Sheet>
     </main>
   );
 }
+
+export default LoginFinal;
