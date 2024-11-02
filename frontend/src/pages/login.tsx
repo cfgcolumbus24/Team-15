@@ -62,6 +62,7 @@ const LoginFinal = () => {
         height: "100vh",
         backgroundColor: "#f5f5f5",
         padding: "20px", 
+        background: "linear-gradient(135deg, #f5f5f5, #e0f7fa)"
       }}
     >
       <CssBaseline />
@@ -105,7 +106,7 @@ const LoginFinal = () => {
           <Input
             name="username"
             type="text"
-            placeholder="johndoe"
+            placeholder="username"
             sx={{
               height: '48px', 
               fontSize: '1rem', 
@@ -135,7 +136,7 @@ const LoginFinal = () => {
           Log in 
         </Button>
       </Sheet>
-
+          
       {/* Snackbar for alerts */}
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }} style={{ backgroundColor: snackbarSeverity === 'success' ? '#4caf50' : '#f44336' }}>

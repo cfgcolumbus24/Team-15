@@ -2,6 +2,8 @@ DROP TABLE IF EXISTS clinician_clients CASCADE;
 DROP TABLE IF EXISTS patient CASCADE;
 DROP TABLE IF EXISTS clinician CASCADE;
 DROP TABLE IF EXISTS monthly_budget;
+
+
 CREATE TABLE clinician
 (
     id SERIAL PRIMARY KEY,

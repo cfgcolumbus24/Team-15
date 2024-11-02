@@ -1,8 +1,5 @@
-
-
 import React, { useState, useEffect } from 'react';
 import Dropdown from './list.tsx';
-
 import {
   Box,
   Card,
@@ -18,6 +15,12 @@ import {
   TableRow,
   Paper,
   IconButton,
+  TextField,
+  Button,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
 } from '@mui/material';
 import {
   LineChart,
@@ -30,6 +33,7 @@ import { pink, blue, green, orange, purple, grey, red } from '@mui/material/colo
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useNavigate } from 'react-router-dom';
 
 const patientProgressData = [
   { month: 'Jan', improved: 70, stable: 25, worsened: 5 },
@@ -53,8 +57,18 @@ const upcomingAppointments = [
   { name: 'Emily White', date: '2024-11-05', time: '9:00 AM', urgency: 'High', status: 'Confirmed' },
 ];
 
+const commands = [
+  'get Age less than 30',
+  'get Race{ Asian }',
+  'get Date OF Birth',
+  'get All Clinicians',
+];
+
 const Home: React.FC = () => {
+  const navigate = useNavigate(); 
   const [totalPatients, setTotalPatients] = useState<number>(0);
+  const [inputValue, setInputValue] = useState<string>('');
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
   useEffect(() => {
     fetchTotalPatients();
@@ -71,6 +85,59 @@ const Home: React.FC = () => {
     } catch (error) {
       console.error('Error fetching total patients:', error);
       setTotalPatients(0);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    if (value.startsWith('/')) {
+      setShowDropdown(true);
+    } else {
+      setShowDropdown(false);
+    }
+  };
+
+  const handleCommandClick = (command: string) => {
+    setInputValue(`/${command}`);
+    setShowDropdown(false);
+  };
+
+  const handleExecute = async () => {
+    const baseUrl = 'http://localhost:8080/api/v1/patients';
+    
+    try {
+      let response;
+      const command = inputValue.replace('/', '').toLowerCase();
+      
+      if (command.startsWith('get age less than')) {
+        const age = command.split(' ').pop();
+        response = await fetch(`${baseUrl}/age/${age}`);
+        // console.log(response);
+      } 
+      else if (command.startsWith('get race')) {
+        const matches = command.match(/\{([^}]+)\}/);
+        if (!matches) {
+            console.error('Invalid race format');
+            return;
+        }
+        const race = matches[1].trim();
+        response = await fetch(`${baseUrl}/race/${race}`);
+      }
+      else if (command === 'get date of birth') {
+        response = await fetch(`${baseUrl}/dob`);
+      }
+      else if (command === 'get all clinicians') {
+        response = await fetch(`${baseUrl}/clinicians`);
+      }
+
+      if (response && response.ok) {
+        const data = await response.json();
+        console.log(data)
+        navigate('/plaintext', { state: { data, command: inputValue } });
+      }
+    } catch (error) {
+      console.error('Error executing command:', error);
     }
   };
 
@@ -108,7 +175,53 @@ const Home: React.FC = () => {
         </Box>
       </Box>
 
-      <Grid container spacing={3} justifyContent="center">
+      {/* Input field and Execute button */}
+      <Box display="flex" justifyContent="center" mt={4} position="relative">
+        <TextField
+          label="Enter / to Search"
+          variant="outlined"
+          value={inputValue}
+          onChange={handleInputChange}
+          sx={{
+            marginRight: 2,
+            width: '400px',
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '8px',
+            },
+          }}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleExecute}
+        >
+          Execute
+        </Button>
+        {showDropdown && (
+          <List
+            sx={{
+              position: 'absolute',
+              top: '50px',
+              width: '400px',
+              backgroundColor: 'white',
+              border: `1px solid ${grey[300]}`,
+              borderRadius: '8px',
+              boxShadow: 3,
+              zIndex: 1,
+            }}
+          >
+            {commands.map((command, index) => (
+              <ListItem key={index} disablePadding>
+                <ListItemButton onClick={() => handleCommandClick(command)}>
+                  <ListItemText primary={command} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        )}
+      </Box>
+
+      <Grid container spacing={3} justifyContent="center" mt={3}>
         {/* Upcoming Appointments Card */}
         <Grid item xs={12} sm={6} md={4}>
           <Card sx={{ boxShadow: 4, borderRadius: 3, height: '100%' }}>
@@ -129,14 +242,38 @@ const Home: React.FC = () => {
                   </TableHead>
                   <TableBody>
                     {upcomingAppointments.map((appointment, index) => (
-                      <TableRow key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: grey[200] }, '&:hover': { backgroundColor: blue[50] } }}>
+                      <TableRow
+                        key={index}
+                        sx={{
+                          '&:nth-of-type(odd)': { backgroundColor: grey[200] },
+                          '&:hover': { backgroundColor: blue[50] },
+                        }}
+                      >
                         <TableCell>{appointment.name}</TableCell>
                         <TableCell>{appointment.date}</TableCell>
                         <TableCell>{appointment.time}</TableCell>
-                        <TableCell sx={{ color: appointment.urgency === 'High' ? red[600] : appointment.urgency === 'Medium' ? orange[600] : green[600] }}>
+                        <TableCell
+                          sx={{
+                            color:
+                              appointment.urgency === 'High'
+                                ? red[600]
+                                : appointment.urgency === 'Medium'
+                                ? orange[600]
+                                : green[600],
+                          }}
+                        >
                           {appointment.urgency}
                         </TableCell>
-                        <TableCell sx={{ color: appointment.status === 'Confirmed' ? green[600] : appointment.status === 'Pending' ? orange[600] : red[600] }}>
+                        <TableCell
+                          sx={{
+                            color:
+                              appointment.status === 'Confirmed'
+                                ? green[600]
+                                : appointment.status === 'Pending'
+                                ? orange[600]
+                                : red[600],
+                          }}
+                        >
                           {appointment.status}
                         </TableCell>
                       </TableRow>
@@ -150,8 +287,23 @@ const Home: React.FC = () => {
 
         {/* Total Patients Card */}
         <Grid item xs={12} sm={6} md={4}>
-          <Card sx={{ boxShadow: 4, borderRadius: 3, height: '100%', display: 'flex', flexDirection: 'column' }}>
-            <CardContent sx={{ padding: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Card
+            sx={{
+              boxShadow: 4,
+              borderRadius: 3,
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <CardContent
+              sx={{
+                padding: 3,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
               <Avatar sx={{ bgcolor: purple[500], width: 80, height: 80, mr: 2 }}>
                 <PersonIcon sx={{ fontSize: 55, color: 'white' }} />
               </Avatar>
@@ -164,9 +316,18 @@ const Home: React.FC = () => {
                 </Typography>
               </Box>
             </CardContent>
-            <CardContent sx={{ padding: 3, textAlign: 'center', bgcolor: grey[200], borderRadius: 0, flexGrow: 1 }}>
+            <CardContent
+              sx={{
+                padding: 3,
+                textAlign: 'center',
+                bgcolor: grey[200],
+                borderRadius: 0,
+                flexGrow: 1,
+              }}
+            >
               <Typography variant="body2" color="text.secondary">
-                This number reflects the total patients currently under care, highlighting our commitment to community health.
+                This number reflects the total patients currently under care, highlighting our
+                commitment to community health.
               </Typography>
             </CardContent>
           </Card>
@@ -190,7 +351,11 @@ const Home: React.FC = () => {
                 <Line type="monotone" dataKey="worsened" stroke={pink[500]} />
               </LineChart>
             </Box>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ display: 'flex', justifyContent: 'center' }}
+            >
               Monthly patient progress trends
             </Typography>
           </CardContent>

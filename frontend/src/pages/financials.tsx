@@ -25,8 +25,10 @@ import {
 import { blue, grey, pink, purple, teal } from '@mui/material/colors';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+<<<<<<< HEAD
 import axios from 'axios';
 // Sample nonprofit financial data
+
 const budgetAllocationData = [
   { category: 'Program Services', amount: 15000 },
   { category: 'Fundraising', amount: 15000 },
@@ -191,7 +193,14 @@ const Financials: React.FC = () => {
             </Card>
           </Grid>
         </Grid>
+        {/* Footer */}
+      <Box textAlign="center" mt={4}>
+        <Typography variant="caption" color="text.secondary">
+          Netcare 2024
+        </Typography>
       </Box>
+      </Box>
+      
     </Box>
   );
 };
