@@ -21,7 +21,7 @@ public class PatientController {
     @GetMapping("/sampleData")
     public @ResponseBody String getPatient() {
         Patient p = new Patient("John Doe", 24, "5'6\"", 165, "10/5/2000", "Asian", "Male", 100, "None",  "Man");
-        Clinician c = new Clinician("Jane Doe", "1111 Polaris Pkway, Columbus OH", "Optometry");
+        Clinician c = new Clinician("Jane Doe", "1111 Polaris Pkway, Columbus OH", "Optometry", null);
         Set<Clinician> doctors = p.getDoctors();
         doctors.add(c);
         p.setDoctors(doctors);
