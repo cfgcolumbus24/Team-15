@@ -1,15 +1,9 @@
-<<<<<<< HEAD
-DROP TABLE IF EXISTS clinician_clients;
-DROP TABLE IF EXISTS patient CASCADE;
-DROP TABLE IF EXISTS clinician CASCADE;
-DROP TABLE IF EXISTS patient_progress; 
-=======
 DROP TABLE IF EXISTS clinician_clients CASCADE;
 DROP TABLE IF EXISTS patient CASCADE;
 DROP TABLE IF EXISTS clinician CASCADE;
 DROP TABLE IF EXISTS monthly_budget;
+DROP TABLE IF EXISTS patient_progress CASCADE;
 
->>>>>>> 789abdd5c1d76c907d246b0be8d6029b0e70a00a
 
 CREATE TABLE clinician
 (
@@ -126,7 +120,6 @@ VALUES
     (9, 18),
     (9, 19),
     (10, 20);
-<<<<<<< HEAD
 
     
 CREATE TABLE patient_progress (
@@ -229,7 +222,6 @@ INSERT INTO patient_progress (patient_id, month, current_month, last_month) VALU
     (7, 10, 70.0, 68.0),
     (7, 11, 71.0, 70.0),
     (7, 12, 73.0, 71.0);
-=======
 INSERT INTO monthly_budget
     (month_name, budget)
 VALUES
@@ -246,4 +238,3 @@ VALUES
     ('November', 17000),
     ('December', 18000);
 
->>>>>>> 789abdd5c1d76c907d246b0be8d6029b0e70a00a
