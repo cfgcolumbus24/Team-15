@@ -15,6 +15,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(path = "api/v1/clinician")
+@CrossOrigin(origins = "*")
 public class ClinicianController {
 
     private final ClinicianService clinicianService;
