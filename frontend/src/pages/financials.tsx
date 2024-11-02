@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Dropdown from './list.tsx';
 import {
   Box,
@@ -25,37 +25,65 @@ import {
 import { blue, grey, pink, purple, teal } from '@mui/material/colors';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import axios from 'axios';
 // Sample nonprofit financial data
 const budgetAllocationData = [
-  { category: 'Program Services', amount: 80000 },
+  { category: 'Program Services', amount: 15000 },
   { category: 'Fundraising', amount: 15000 },
-  { category: 'Administrative', amount: 10000 },
+  { category: 'Philanthropy', amount: 15000 },
 ];
 
-const monthlySpendingData = [
-  { month: 'Jan', spending: 2300 },
-  { month: 'Feb', spending: 7000 },
-  { month: 'Mar', spending: 7200 },
-  { month: 'Apr', spending: 5100 },
-  { month: 'May', spending: 7500 },
-  { month: 'Jun', spending: 6500 },
-  { month: 'Jul', spending: 4700 },
-  { month: 'Aug', spending: 8300 },
-  { month: 'Sep', spending: 7600 },
-  { month: 'Oct', spending: 2200 },
-  { month: 'Nov', spending: 5400 },
-  { month: 'Dec', spending: 8500 },
-];
 
-const budgetChangesData = [
-  { quarter: 'Q1', budget: 100000 },
-  { quarter: 'Q2', budget: 105000 },
-  { quarter: 'Q3', budget: 95000 },
-  { quarter: 'Q4', budget: 110000 },
-];
 
 const Financials: React.FC = () => {
+  const [monthlySpendingData, setMonthlySpendingData] = useState([
+                                                                   { month: 'Jan', spending: 2300 },
+                                                                   { month: 'Feb', spending: 7000 },
+                                                                   { month: 'Mar', spending: 7200 },
+                                                                   { month: 'Apr', spending: 5100 },
+                                                                   { month: 'May', spending: 7500 },
+                                                                   { month: 'Jun', spending: 6500 },
+                                                                   { month: 'Jul', spending: 4700 },
+                                                                   { month: 'Aug', spending: 8300 },
+                                                                   { month: 'Sep', spending: 7600 },
+                                                                   { month: 'Oct', spending: 2200 },
+                                                                   { month: 'Nov', spending: 5400 },
+                                                                   { month: 'Dec', spending: 8500 }
+                                                                 ])
+  const [budgetChangesData, setBudgetChangesData] = useState([
+                                                                     { quarter: 'Q1', budget: 2300 },
+                                                                     { quarter: 'Q2', budget: 7000 },
+                                                                     { quarter: 'Q3', budget: 7200 },
+                                                                     { quarter: 'Q4', budget: 5100 }
+                                                                   ])
+  const url = 'http://localhost:8080/api/v1/'
+    useEffect(() => {
+        const fetchBudget = async () => {
+            const response = axios.get(url+ 'budgets/all').then(response => {
+                console.log(response)
+                let months = []
+                let budget = 0
+                let count = 0
+                response.data.forEach((month) => {
+                    months.push({month: month.month, spending: month.budget})
+                    budget += month.budget;
+                    console.log(budget, count)
+                    if ((count + 1) % 3  === 0) {
+                        let tempBudget = budgetChangesData;
+                        tempBudget[Math.floor(count / 3)].budget = budget;
+                        budget = 0
+                        setBudgetChangesData(tempBudget)
+                    }
+                    count += 1
+                })
+                setMonthlySpendingData(months)
+              }).catch(error => {
+                 alert("Error!")
+              console.error(error);
+            });
+        }
+        fetchBudget();
+      }, []);
   return (
     <Box p={0} bgcolor={grey[100]} minHeight="100vh">
       {/* Header */}
@@ -73,7 +101,7 @@ const Financials: React.FC = () => {
         <Dropdown />
         
         <Typography variant="h3" fontWeight="bold">
-          Nonprofit Financial Overview
+          Netcare Financial Overview
         </Typography>
         <Typography variant="subtitle1">
           Tracking Budget Allocation, Spending, and Financial Health
@@ -102,13 +130,13 @@ const Financials: React.FC = () => {
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <ResponsiveContainer width="100%" height={250}>
                     <PieChart>
-                      <Pie data={budgetAllocationData} dataKey="amount" nameKey="category" cx="50%" cy="50%" outerRadius={80} fill={blue[400]} label>
+                      <Pie data={budgetAllocationData} dataKey="amount" nameKey="category" cx="50%" cy="50%" outerRadius={50} fill={blue[400]} label>
                         {budgetAllocationData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={[purple[400], blue[500], teal[300]][index % 3]} />
                         ))}
                       </Pie>
                       <Legend layout="vertical" align="right" verticalAlign="middle" />
-                      <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
+                      <Tooltip formatter={(value) => `$ ${value.toLocaleString()}`} />
                     </PieChart>
                   </ResponsiveContainer>
                 </Box>
