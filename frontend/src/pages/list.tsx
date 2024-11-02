@@ -26,6 +26,10 @@ function Dropdown() {
     navigate("/Demographics");
   };
 
+  const handleLogout = () => {
+    navigate("/");
+  };
+
   const handlePatients = () => {
     navigate("/Patients");
   };
@@ -67,9 +71,9 @@ function Dropdown() {
       </List>
       <Divider />
       <List>
-        {["Settings", "Logout"].map((text, index) => (
+        {["Logout"].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={handleLogout}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
