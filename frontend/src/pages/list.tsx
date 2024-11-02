@@ -8,10 +8,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
+import SettingsIcon from "@mui/icons-material/Settings";
 import HomeIcon from "@mui/icons-material/Home";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import { useNavigate } from "react-router-dom";
 
 function Dropdown() {
@@ -50,7 +53,7 @@ function Dropdown() {
       <ListItem disablePadding>
         <ListItemButton onClick={handlePatients}> {/* Add click handler for Patients */}
           <ListItemIcon>
-            <InboxIcon />
+            <EmojiPeopleIcon/>
           </ListItemIcon>
           <ListItemText primary="Patients" />
         </ListItemButton>
@@ -59,7 +62,7 @@ function Dropdown() {
         <ListItem key={text} disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <AdminPanelSettingsIcon/>
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItemButton>
@@ -88,7 +91,7 @@ function Dropdown() {
           <ListItem key={text} disablePadding>
             <ListItemButton >
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <SettingsIcon/>
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -98,7 +101,7 @@ function Dropdown() {
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={handleLogout}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <LogoutIcon/>
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
