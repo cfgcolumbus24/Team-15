@@ -30,6 +30,9 @@ import { pink, blue, green, orange, purple, grey, red } from '@mui/material/colo
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useLocation } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const patientProgressData = [
   { month: 'Jan', improved: 70, stable: 25, worsened: 5 },
@@ -54,24 +57,15 @@ const upcomingAppointments = [
 ];
 
 const Home: React.FC = () => {
-  const [totalPatients, setTotalPatients] = useState<number>(0);
+  const location = useLocation();
+  const { message, severity } = location.state || { message: '', severity: 'info' };
+  const [open, setOpen] = React.useState(!!message);
 
-  useEffect(() => {
-    fetchTotalPatients();
-  }, []);
-
-  const fetchTotalPatients = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/api/v1/patients/all');
-      if (!response.ok) {
-        throw new Error('Failed to fetch patients');
-      }
-      const data = await response.json();
-      setTotalPatients(data.length);
-    } catch (error) {
-      console.error('Error fetching total patients:', error);
-      setTotalPatients(0);
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
     }
+    setOpen(false);
   };
 
   return (
@@ -88,7 +82,7 @@ const Home: React.FC = () => {
           position: 'relative',
         }}
       >
-        <Dropdown />
+        <Dropdown /> {/* Rendered with fixed positioning */}
         
         <Typography variant="h3" fontWeight="bold">
           Netcare Clinician Dashboard
@@ -99,12 +93,12 @@ const Home: React.FC = () => {
 
         {/* Icons for Settings and Profile */}
         <Box position="absolute" top={16} right={16} display="flex" gap={2}>
-          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
-            <SettingsIcon sx={{ fontSize: 30 }} />
-          </IconButton>
-          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
-            <AccountCircleIcon sx={{ fontSize: 30 }} />
-          </IconButton>
+            <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
+              <SettingsIcon sx={{ fontSize: 30 }} />
+            </IconButton>
+            <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
+              <AccountCircleIcon sx={{ fontSize: 30 }} />
+            </IconButton>
         </Box>
       </Box>
 
@@ -152,8 +146,8 @@ const Home: React.FC = () => {
         <Grid item xs={12} sm={6} md={4}>
           <Card sx={{ boxShadow: 4, borderRadius: 3, height: '100%', display: 'flex', flexDirection: 'column' }}>
             <CardContent sx={{ padding: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Avatar sx={{ bgcolor: purple[500], width: 80, height: 80, mr: 2 }}>
-                <PersonIcon sx={{ fontSize: 55, color: 'white' }} />
+              <Avatar sx={{ bgcolor: purple[500], width: 64, height: 64, mr: 2 }}>
+                <PersonIcon sx={{ fontSize: 40, color: 'white' }} />
               </Avatar>
               <Box textAlign="left">
                 <Typography variant="h6" color="text.secondary">
@@ -190,19 +184,19 @@ const Home: React.FC = () => {
                 <Line type="monotone" dataKey="worsened" stroke={pink[500]} />
               </LineChart>
             </Box>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'flex', justifyContent: 'center' }}>
-              Monthly patient progress trends
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', marginTop: 2 }}>
+              This chart illustrates the progress of patients over the past year, indicating improvements, stability, and regressions.
             </Typography>
           </CardContent>
         </Card>
       </Grid>
 
-      {/* Footer */}
-      <Box textAlign="center" mt={4}>
-        <Typography variant="caption" color="text.secondary">
-          Netcare 2024
-        </Typography>
-      </Box>
+      {/* Snackbar for feedback messages */}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
