@@ -22,7 +22,7 @@ public class Patient {
 
     private int weight;
 
-    private double bmi;
+    private String dob;
 
     private String race;
 
@@ -32,37 +32,22 @@ public class Patient {
 
     private String history;
 
+    private String gender;
+
     public Patient() {
-        this.name = "";
-        this.age = -1;
-        this.height = "0'0\"";
-        this.weight = -1;
-        this.bmi = 0.0;
-        this.race = "";
-        this.sex = "";
-        this.income = 0;
-        this.history = "";
     }
 
-    public Patient(String name, int age, String height, int weight, double BMI, String race, String sex, int income, String history) {
+    public Patient(String name, int age, String height, int weight, String dob, String race, String sex, int income, String history, String gender) {
         this.name = name;
         this.age = age;
         this.height = height;
         this.weight = weight;
-        this.bmi = BMI;
+        this.dob = dob;
         this.race = race;
         this.sex = sex;
         this.income = income;
         this.history = history;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.gender = gender;
     }
 
     public String getName() {
@@ -97,18 +82,21 @@ public class Patient {
         this.weight = weight;
     }
 
-    public double getBmi() {
-        return bmi;
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
     public String getRace() {
         return race;
     }
 
-    public void setBmi(double bmi) {
-        this.bmi = bmi;
+    public void setRace(String race) {
+        this.race = race;
     }
-
 
     public String getSex() {
         return sex;
@@ -127,11 +115,18 @@ public class Patient {
     }
 
     public String getHistory() {
-        return this.history;
+        return history;
     }
 
     public void setHistory(String history) {
         this.history = history;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 }
