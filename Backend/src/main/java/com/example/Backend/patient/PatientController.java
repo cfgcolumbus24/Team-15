@@ -4,7 +4,7 @@ import com.example.Backend.Clinician.Clinician;
 import com.example.Backend.Clinician.ClinicianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.stream.Collectors;
 import java.util.*;
 
 
@@ -34,8 +34,55 @@ public class PatientController {
     @GetMapping("/{name}")
     public Patient getPatientByName(@PathVariable String name) {
         Patient p = patientRepository.findPatientByName(name);
-        p.getDoctors().forEach((n) -> {n.setClients(null);});
+        p.getDoctors().forEach((n) -> {
+            n.setClients(null);
+        });
         return p;
+    }
+    
+    @GetMapping("/age/{age}")
+    public List<Patient> getPatientsUnderAge(@PathVariable int age) {
+        List<Patient> allPatients = (List<Patient>) patientRepository.findAll();
+        List<Patient> filteredPatients = allPatients.stream()
+            .filter(patient -> patient.getAge() < age)
+            .collect(Collectors.toList());
+        
+        // Clear circular references
+        filteredPatients.forEach(p -> p.getDoctors().forEach(d -> d.setClients(null)));
+        return filteredPatients;
+    }
+
+    @GetMapping("/race/{race}")
+    public List<Patient> getPatientsByRace(@PathVariable String race) {
+        List<Patient> allPatients = (List<Patient>) patientRepository.findAll();
+        List<Patient> filteredPatients = allPatients.stream()
+            .filter(patient -> patient.getRace().equalsIgnoreCase(race))
+            .collect(Collectors.toList());
+        
+        // Clear circular references
+        filteredPatients.forEach(p -> p.getDoctors().forEach(d -> d.setClients(null)));
+        return filteredPatients;
+    }
+
+    @GetMapping("/dob")
+    public List<Map<String, String>> getAllPatientsDOB() {
+        List<Patient> allPatients = (List<Patient>) patientRepository.findAll();
+        return allPatients.stream()
+            .map(patient -> {
+                Map<String, String> dobMap = new HashMap<>();
+                dobMap.put("name", patient.getName());
+                dobMap.put("dob", patient.getDob());
+                return dobMap;
+            })
+            .collect(Collectors.toList());
+    }
+
+    @GetMapping("/clinicians")
+    public List<Clinician> getAllClinicians() {
+        List<Clinician> clinicians = clinicianRepository.findAll();
+        // Clear circular references
+        clinicians.forEach(c -> c.getClients().forEach(p -> p.setDoctors(null)));
+        return clinicians;
     }
 
     @GetMapping("/demo/{demographic}")
