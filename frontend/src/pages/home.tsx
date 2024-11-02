@@ -76,10 +76,10 @@ const Home: React.FC = () => {
         
         {/* Icons for Settings and Profile */}
         <Box position="absolute" top={16} right={16} display="flex" gap={2}>
-          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[600] } }}>
+          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
             <SettingsIcon sx={{ fontSize: 30 }} />
           </IconButton>
-          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[600] } }}>
+          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
             <AccountCircleIcon sx={{ fontSize: 30 }} />
           </IconButton>
         </Box>
