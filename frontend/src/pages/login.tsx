@@ -91,9 +91,12 @@ const LoginFinal = () => {
 
         <FormControl>
           <FormLabel>Username</FormLabel>
+          <FormLabel>Username</FormLabel>
           <Input
             name="username"
+            name="username"
             type="text"
+            placeholder="johndoe"
             placeholder="johndoe"
             sx={{
               height: '48px', 
@@ -104,7 +107,11 @@ const LoginFinal = () => {
         </FormControl>
         <FormControl>
           <FormLabel>Password</FormLabel>
+          <FormLabel>Password</FormLabel>
           <Input
+            name="password"
+            type="password"
+            placeholder="password"
             name="password"
             type="password"
             placeholder="password"
