@@ -1,8 +1,5 @@
-
-
 import React, { useState, useEffect } from 'react';
 import Dropdown from './list.tsx';
-
 import {
   Box,
   Card,
@@ -18,6 +15,8 @@ import {
   TableRow,
   Paper,
   IconButton,
+  TextField,
+  Button
 } from '@mui/material';
 import {
   LineChart,
@@ -55,6 +54,7 @@ const upcomingAppointments = [
 
 const Home: React.FC = () => {
   const [totalPatients, setTotalPatients] = useState<number>(0);
+  const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
     fetchTotalPatients();
@@ -72,6 +72,11 @@ const Home: React.FC = () => {
       console.error('Error fetching total patients:', error);
       setTotalPatients(0);
     }
+  };
+
+  const handleExecute = () => {
+    console.log('Executed with input:', inputValue);
+    // Add any additional logic for handling input here
   };
 
   return (
@@ -196,6 +201,30 @@ const Home: React.FC = () => {
           </CardContent>
         </Card>
       </Grid>
+
+      {/* Input field and Execute button */}
+      <Box display="flex" justifyContent="center" mt={4}>
+        <TextField
+          label="Enter / to Search"
+          variant="outlined"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          sx={{ 
+            marginRight: 2, 
+            width: '400px', // Increase the width as needed
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '8px' // Adjust the border radius
+            }
+          }}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleExecute}
+        >
+          Execute
+        </Button>
+      </Box>
 
       {/* Footer */}
       <Box textAlign="center" mt={4}>
