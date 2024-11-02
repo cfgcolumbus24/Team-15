@@ -56,17 +56,21 @@ const LoginFinal = () => {
         }}
         variant="outlined"
       >
-        <Typography level="body-md" textAlign="center" sx={{ mb: -1.5, fontWeight: "bold",  fontSize: "2.2rem"}}>
+        <Typography level="body-md" textAlign="center" sx={{ mb: -1.5, fontWeight: "bold", fontSize: "2.2rem" }}>
           Welcome!
         </Typography>
         <Typography level="body-md" textAlign="center" sx={{ mb: 3 }}>
           Please sign in to continue.
         </Typography>
+
         <FormControl>
+          <FormLabel>Username</FormLabel>
           <FormLabel>Username</FormLabel>
           <Input
             name="username"
+            name="username"
             type="text"
+            placeholder="johndoe"
             placeholder="johndoe"
             sx={{
               height: '48px', 
@@ -76,7 +80,11 @@ const LoginFinal = () => {
         </FormControl>
         <FormControl>
           <FormLabel>Password</FormLabel>
+          <FormLabel>Password</FormLabel>
           <Input
+            name="password"
+            type="password"
+            placeholder="password"
             name="password"
             type="password"
             placeholder="password"
