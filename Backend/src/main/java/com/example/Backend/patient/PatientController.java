@@ -4,7 +4,7 @@ import com.example.Backend.Clinician.Clinician;
 import com.example.Backend.Clinician.ClinicianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.stream.Collectors;
 import java.util.*;
 
 @RestController
@@ -17,9 +17,6 @@ public class PatientController {
 
     @Autowired
     private ClinicianRepository clinicianRepository;
-
-    @Autowired
-    private PatientProgressRepository patientProgressRepository;
 
     @GetMapping("/")
     public @ResponseBody String getPatient() {
@@ -47,33 +44,49 @@ public class PatientController {
         return p;
     }
 
-    @GetMapping("/progress")
-    public HashMap<Integer, int[]> getProgress() {
-        HashMap<Integer, int[]> counts = new HashMap<>();
-        for (int i = 0; i < 12; i++) {
-            counts.put(i, new int[3]);
-        }
+    @GetMapping("/age/{age}")
+    public List<Patient> getPatientsUnderAge(@PathVariable int age) {
+        List<Patient> allPatients = (List<Patient>) patientRepository.findAll();
+        List<Patient> filteredPatients = allPatients.stream()
+                .filter(patient -> patient.getAge() < age)
+                .collect(Collectors.toList());
 
-        List<PatientProgress> patientList = (List<PatientProgress>) patientProgressRepository.findAll();
+        // Clear circular references
+        filteredPatients.forEach(p -> p.getDoctors().forEach(d -> d.setClients(null)));
+        return filteredPatients;
+    }
 
-        for (PatientProgress p : patientList) {
-            int key = p.getMonth();
-            double lastMonth = p.getLastMonth();
-            double thisMonth = p.getCurrentMonth();
+    @GetMapping("/race/{race}")
+    public List<Patient> getPatientsByRace(@PathVariable String race) {
+        List<Patient> allPatients = (List<Patient>) patientRepository.findAll();
+        List<Patient> filteredPatients = allPatients.stream()
+                .filter(patient -> patient.getRace().equalsIgnoreCase(race))
+                .collect(Collectors.toList());
 
-            int[] oldArr = counts.get(key);
+        // Clear circular references
+        filteredPatients.forEach(p -> p.getDoctors().forEach(d -> d.setClients(null)));
+        return filteredPatients;
+    }
 
-            if (thisMonth > lastMonth) {
-                oldArr[0]++;
-            } else if (lastMonth > thisMonth) {
-                oldArr[1]++;
-            } else {
-                oldArr[2]++;
-            }
-        }
+    @GetMapping("/dob")
+    public List<Map<String, String>> getAllPatientsDOB() {
+        List<Patient> allPatients = (List<Patient>) patientRepository.findAll();
+        return allPatients.stream()
+                .map(patient -> {
+                    Map<String, String> dobMap = new HashMap<>();
+                    dobMap.put("name", patient.getName());
+                    dobMap.put("dob", patient.getDob());
+                    return dobMap;
+                })
+                .collect(Collectors.toList());
+    }
 
-        return counts;
-
+    @GetMapping("/clinicians")
+    public List<Clinician> getAllClinicians() {
+        List<Clinician> clinicians = clinicianRepository.findAll();
+        // Clear circular references
+        clinicians.forEach(c -> c.getClients().forEach(p -> p.setDoctors(null)));
+        return clinicians;
     }
 
     @GetMapping("/demo/{demographic}")
@@ -168,11 +181,6 @@ public class PatientController {
                     demographics.put(ageString, demographics.get(ageString) + 1);
                 }
             });
-        }
-        if (!demographic.equals("income")) {
-            for (String key : demographics.keySet()) {
-                demographics.put(key, demographics.get(key) / count);
-            }
         }
 
         return demographics;

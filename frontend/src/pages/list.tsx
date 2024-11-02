@@ -15,6 +15,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
+import PaidIcon from '@mui/icons-material/Paid';
 import { useNavigate } from "react-router-dom";
 
 function Dropdown() {
@@ -40,6 +41,10 @@ function Dropdown() {
 
   const handleHome = () => {
     navigate("/Home");
+  };
+
+  const handleFinancials = () => {
+    navigate("/Financials");
   };
 
   const DrawerList = (
@@ -74,6 +79,14 @@ function Dropdown() {
               <AnalyticsIcon />
             </ListItemIcon>
             <ListItemText primary="Demographics" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleFinancials}> {/* Add click handler for Demographics */}
+            <ListItemIcon>
+              <PaidIcon />
+            </ListItemIcon>
+            <ListItemText primary="Financials" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
