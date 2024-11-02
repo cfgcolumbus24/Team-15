@@ -1,10 +1,10 @@
 package com.example.Backend.patient;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.Backend.Clinician.Clinician;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "patient")
@@ -34,6 +34,10 @@ public class Patient {
 
     private String gender;
 
+
+    @ManyToMany(mappedBy = "clients")
+    private Set<Clinician> doctors;
+
     public Patient() {
     }
 
@@ -48,10 +52,19 @@ public class Patient {
         this.income = income;
         this.history = history;
         this.gender = gender;
+        this.doctors = new HashSet<>();
     }
 
     public String getName() {
         return name;
+    }
+
+    public Set<Clinician> getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(Set<Clinician> doctors) {
+        this.doctors = doctors;
     }
 
     public void setName(String name) {
