@@ -70,7 +70,7 @@ const Financials: React.FC = () => {
         <Dropdown />
         
         <Typography variant="h3" fontWeight="bold">
-          Clinic Financial Overview
+          Financial Overview
         </Typography>
         <Typography variant="subtitle1">
           Analyzing Revenue, Expenses, and Profit Margins

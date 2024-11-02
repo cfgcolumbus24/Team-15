@@ -1,12 +1,12 @@
 import React from 'react';
-import { Container, Typography, AppBar, Toolbar, Box } from '@mui/material';
+import { Container, Typography, Box } from '@mui/material';
 import PatientInfo from './patient-info.tsx';
 import { useParams } from 'react-router-dom';
 import { blue, grey } from '@mui/material/colors';
 import VitalSigns from './vital-signs.tsx';
 import Symptoms from './symptoms.tsx';
 import MedicalHistory from './medical-history.tsx';
-import Dropdown from './list.tsx'; // Import the Dropdown component
+import Dropdown from './list.tsx';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
