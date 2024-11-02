@@ -1,11 +1,13 @@
 package com.example.Backend.Patient;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.Backend.Clinician.Clinician;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "patient")
 public class Patient {
 
     @Id
@@ -20,7 +22,7 @@ public class Patient {
 
     private int weight;
 
-    private double bmi;
+    private String dob;
 
     private String race;
 
@@ -30,41 +32,39 @@ public class Patient {
 
     private String history;
 
+    private String gender;
+
+
+    @ManyToMany(mappedBy = "clients")
+    private Set<Clinician> doctors;
+
     public Patient() {
-        this.name = "";
-        this.age = -1;
-        this.height = "0'0\"";
-        this.weight = -1;
-        this.bmi = 0.0;
-        this.race = "";
-        this.sex = "";
-        this.income = 0;
-        this.history = "";
     }
 
-    public Patient(String name, int age, String height, int weight, float BMI, String race, String sex, int income, String history) {
+    public Patient(String name, int age, String height, int weight, String dob, String race, String sex, int income, String history, String gender) {
         this.name = name;
         this.age = age;
         this.height = height;
         this.weight = weight;
-        this.bmi = BMI;
+        this.dob = dob;
         this.race = race;
         this.sex = sex;
         this.income = income;
         this.history = history;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.gender = gender;
+        this.doctors = new HashSet<>();
     }
 
     public String getName() {
         return name;
+    }
+
+    public Set<Clinician> getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(Set<Clinician> doctors) {
+        this.doctors = doctors;
     }
 
     public void setName(String name) {
@@ -95,12 +95,12 @@ public class Patient {
         this.weight = weight;
     }
 
-    public double getBmi() {
-        return bmi;
+    public String getDob() {
+        return dob;
     }
 
-    public void setBmi(double BMI) {
-        this.bmi = BMI;
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
     public String getRace() {
@@ -128,11 +128,18 @@ public class Patient {
     }
 
     public String getHistory() {
-        return this.history;
+        return history;
     }
 
     public void setHistory(String history) {
         this.history = history;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 }

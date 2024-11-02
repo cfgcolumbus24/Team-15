@@ -1,10 +1,12 @@
 package com.example.Backend.Clinician;
-
 import com.example.Backend.Patient.Patient;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @ConfigurationProperties(prefix = "clinician")
@@ -19,11 +21,23 @@ public class Clinician {
     private String address;
     private String specialty;
 
-    @OneToMany
-    private List<Patient> clients;
+    @ManyToMany
+    @JoinTable(
+            name="clinician_clients",
+            joinColumns = @JoinColumn(name="clinician_id"),
+            inverseJoinColumns = @JoinColumn(name="patient_id")
+    )
+    private Set<Patient> clients;
 
     // Default constructor
     public Clinician() {
+    }
+
+    public Clinician(String name, String address, String specialty) {
+        this.name = name;
+        this.address = address;
+        this.specialty = specialty;
+        this.clients = new HashSet<>();
     }
 
     // Getters and Setters
@@ -59,11 +73,11 @@ public class Clinician {
         this.specialty = specialty;
     }
 
-    public List<Patient> getClients() {
+    public Set<Patient> getClients() {
         return clients;
     }
 
-    public void setClients(List<Patient> clients) {
+    public void setClients(Set<Patient> clients) {
         this.clients = clients;
     }
 }
