@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { Container, Typography, Box, IconButton } from '@mui/material';
+import React from 'react';
+import { Container, Typography, Box } from '@mui/material';
 import PatientInfo from './patient-info.tsx';
 import { useParams } from 'react-router-dom';
 import { blue, grey } from '@mui/material/colors';

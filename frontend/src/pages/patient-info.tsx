@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Container,
   Paper,
   Typography,
   TextField,
   Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
 } from '@mui/material';
-import { blue, grey, pink, purple, teal } from '@mui/material/colors';
+import { blue, grey } from '@mui/material/colors';
 
 interface PatientInfoProps {
   patientName: string;
