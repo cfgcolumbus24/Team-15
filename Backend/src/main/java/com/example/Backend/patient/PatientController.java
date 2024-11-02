@@ -9,7 +9,7 @@ import java.util.*;
 
 
 @RestController
-@RequestMapping("/api/patients")
+@RequestMapping("/api/v1/patients")
 public class PatientController {
 
     @Autowired

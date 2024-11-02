@@ -39,4 +39,8 @@ public class ClinicianService {
     public List<Clinician> getClinicianBySpecialty(String specialty) {
         return clinicianRepository.findBySpecialty(specialty);
     }
+
+    public Clinician getClinicianById(int id) {
+        return clinicianRepository.findById(id);
+    }
 }

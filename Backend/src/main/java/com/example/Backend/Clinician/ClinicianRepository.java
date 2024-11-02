@@ -15,4 +15,6 @@ public interface ClinicianRepository extends JpaRepository<Clinician, Long> {
     List<Clinician> findByLastName(String lastName);
 
     List<Clinician> findBySpecialty(String specialty);
+
+    Clinician findById(int id);
 }

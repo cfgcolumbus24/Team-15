@@ -27,12 +27,26 @@ public class ClinicianController {
 
     @GetMapping("/name/{name}")
     public List<Clinician> getClinicianByName(@PathVariable String name) {
-        return clinicianService.getClinicianByName(name);
+        List<Clinician> cliniList = clinicianService.getClinicianByName(name);
+        cliniList.forEach((n) -> {n.getClients().forEach((c) -> {c.setDoctors(null);});});
+        return cliniList;
+    }
+
+    @GetMapping("/id/{id}")
+    public Clinician getClinicianById(@PathVariable int id) {
+        Clinician c =  clinicianService.getClinicianById(id);
+        if (c!= null) {
+            c.getClients().forEach((cli) -> {cli.setDoctors(null);});
+            return c;
+        }
+        return c;
     }
 
     @GetMapping("/specialty/{specialty}")
     public List<Clinician> getClinicianBySpecialty(@PathVariable String specialty) {
-        return clinicianService.getClinicianBySpecialty(specialty);
+        List<Clinician> cliniList = clinicianService.getClinicianBySpecialty(specialty);
+        cliniList.forEach((n) -> {n.getClients().forEach((c) -> {c.setDoctors(null);});});
+        return cliniList;
     }
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
