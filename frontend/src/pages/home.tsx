@@ -28,9 +28,6 @@ import { pink, blue, green, orange, purple, grey, red } from '@mui/material/colo
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useLocation } from 'react-router-dom';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
 
 // Sample hardcoded data
 const totalPatients = 1200;
@@ -57,17 +54,6 @@ const upcomingAppointments = [
 ];
 
 const Home: React.FC = () => {
-  const location = useLocation();
-  const { message, severity } = location.state || { message: '', severity: 'info' };
-  const [open, setOpen] = React.useState(!!message);
-
-  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpen(false);
-  };
-
   return (
     <Box p={0} bgcolor={grey[100]} minHeight="100vh">
       {/* Header */}
@@ -81,7 +67,7 @@ const Home: React.FC = () => {
             borderRadius: 0,
             position: 'relative',
         }}
-      >
+        >
         <Dropdown /> {/* Rendered with fixed positioning */}
         
         <Typography variant="h3" fontWeight="bold">
@@ -94,13 +80,14 @@ const Home: React.FC = () => {
         {/* Icons for Settings and Profile */}
         <Box position="absolute" top={16} right={16} display="flex" gap={2}>
             <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
-              <SettingsIcon sx={{ fontSize: 30 }} />
+            <SettingsIcon sx={{ fontSize: 30 }} />
             </IconButton>
             <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
-              <AccountCircleIcon sx={{ fontSize: 30 }} />
+            <AccountCircleIcon sx={{ fontSize: 30 }} />
             </IconButton>
         </Box>
-      </Box>
+        </Box>
+
 
       <Grid container spacing={3} justifyContent="center">
         {/* Upcoming Appointments Card */}
@@ -184,19 +171,19 @@ const Home: React.FC = () => {
                 <Line type="monotone" dataKey="worsened" stroke={pink[500]} />
               </LineChart>
             </Box>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', marginTop: 2 }}>
-              This chart illustrates the progress of patients over the past year, indicating improvements, stability, and regressions.
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'flex', justifyContent: 'center' }}>
+              Monthly patient progress trends
             </Typography>
           </CardContent>
         </Card>
       </Grid>
 
-      {/* Snackbar for feedback messages */}
-      <Snackbar open={open} autoHideDuration={1900} onClose={handleClose}>
-        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-          {message}
-        </Alert>
-      </Snackbar>
+      {/* Footer */}
+      <Box textAlign="center" mt={4}>
+        <Typography variant="caption" color="text.secondary">
+          Netcare 2024
+        </Typography>
+      </Box>
     </Box>
   );
 };
