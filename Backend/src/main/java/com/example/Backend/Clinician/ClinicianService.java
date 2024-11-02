@@ -17,11 +17,13 @@ public class ClinicianService {
 
     private final ClinicianRepository clinicianRepository;
 
+
     @Autowired
     public ClinicianService(ClinicianRepository clinicianRepository, PatientRepository patientRepository) {
         this.clinicianRepository = clinicianRepository;
     }
 
+    //returns all clinicians
     public List<Clinician> getClinicians() {
         return clinicianRepository.findAll();
     }
@@ -30,6 +32,7 @@ public class ClinicianService {
         return clinician.isPresent();
     }
 
+    //Returns a list of all clinicals firt and last name first
     public List<Clinician> getClinicianByName(String name) {
         // This will search in both first name and last name
         List<Clinician> byFirstName = clinicianRepository.findByFirstName(name);
@@ -41,9 +44,13 @@ public class ClinicianService {
         results.addAll(byLastName);
         return results;
     }
+
+    //Finds cliniciations by speciality
     public List<Clinician> getClinicianBySpecialty(String specialty) {
         return clinicianRepository.findBySpecialty(specialty);
     }
+
+    //finds clinicions by id
 
     public Clinician getClinicianById(int id) {
         return clinicianRepository.findById(id);

@@ -11,7 +11,10 @@ import java.util.Set;
 @Component
 @ConfigurationProperties(prefix = "clinician")
 @Entity
+
+//Clinican client aka doctor in non profit
 public class Clinician {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +38,7 @@ public class Clinician {
     public Clinician() {
     }
 
+    //constructor
     public Clinician(String firstName, String lastName, String address, String specialty) {
         this.firstName = firstName;
         this.lastName = lastName;

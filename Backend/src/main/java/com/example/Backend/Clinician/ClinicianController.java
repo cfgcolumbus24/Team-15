@@ -13,6 +13,7 @@ import com.example.Backend.LoginRequest;
 import java.util.List;
 import java.util.Set;
 
+//controller api for functions
 @RestController
 @RequestMapping(path = "api/v1/clinician")
 @CrossOrigin(origins = "*")
