@@ -20,8 +20,9 @@ const Patients: React.FC = () => {
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+
   return (
-    <Box sx={{ padding: 3, backgroundColor: 'white' }}>
+    <Box sx={{ padding: 3, backgroundColor: 'white', height: '100vh' }}>
       <Typography variant="h4" gutterBottom>
         Netcare Access
       </Typography>
