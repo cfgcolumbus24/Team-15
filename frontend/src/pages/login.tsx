@@ -20,11 +20,11 @@ const LoginFinal = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-start", // Align items to the left
-        justifyContent: "flex-start", // Align items to the top
+        alignItems: "flex-start", 
+        justifyContent: "flex-start", 
         height: "100vh",
         backgroundColor: "#f5f5f5",
-        padding: "20px", // Add padding to the main container
+        padding: "20px", 
       }}
     >
       <CssBaseline />
@@ -34,17 +34,17 @@ const LoginFinal = () => {
         sx={{ 
           fontWeight: "bold", 
           fontSize: "2.5rem", 
-          mb: 2 // Margin below the title
+          mb: 2 
         }}
       >
         Netcare
       </Typography>
       <Sheet
         sx={{
-          width: 500, // Width of the sign-in box
-          height: 450, // Set to auto to adjust based on content
+          width: 500, 
+          height: 450, 
           mx: "auto",
-          my: 0, // Remove margin top and bottom
+          my: 0, 
           py: 4,
           px: 4,
           display: "flex",
@@ -52,7 +52,7 @@ const LoginFinal = () => {
           gap: 2,
           borderRadius: "md",
           boxShadow: "lg",
-          marginTop: "160px", // Space above the sign-in box
+          marginTop: "160px", 
         }}
         variant="outlined"
       >
@@ -69,8 +69,8 @@ const LoginFinal = () => {
             type="text"
             placeholder="johndoe"
             sx={{
-              height: '48px', // Set input height
-              fontSize: '1rem', // Font size for inputs
+              height: '48px', 
+              fontSize: '1rem', 
             }}
           />
         </FormControl>
@@ -81,16 +81,16 @@ const LoginFinal = () => {
             type="password"
             placeholder="password"
             sx={{
-              height: '48px', // Set input height
-              fontSize: '1rem', // Font size for inputs
+              height: '48px', 
+              fontSize: '1rem', 
             }}
           />
         </FormControl>
         <Button 
           sx={{
-            mt: 2, // Margin top for button
-            height: '48px', // Set button height
-            fontSize: '1rem', // Font size for button
+            mt: 2, 
+            height: '48px',
+            fontSize: '1rem',
           }} 
           onClick={handleLogin}
         >
