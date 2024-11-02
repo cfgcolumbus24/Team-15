@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, TextField, Card, CardContent, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 interface User {
   id: number;
@@ -34,15 +35,16 @@ const Home: React.FC = () => {
       />
       <Box>
         {filteredUsers.map((user) => (
-          <Card
-            key={user.id}
-            sx={{ marginBottom: 2, padding: 2, borderRadius: 2 }}
-          >
-            <CardContent>
-              <Typography variant="h6">{user.name}</Typography>
-              <Typography color="textSecondary">Age: {user.age}</Typography>
-            </CardContent>
-          </Card>
+          <Link to={`/user/${user.id}`} key={user.id} style={{ textDecoration: 'none' }}>
+            <Card
+              sx={{ marginBottom: 2, padding: 2, borderRadius: 2, cursor: 'pointer' }}
+            >
+              <CardContent>
+                <Typography variant="h6">{user.name}</Typography>
+                <Typography color="textSecondary">Age: {user.age}</Typography>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </Box>
     </Box>
