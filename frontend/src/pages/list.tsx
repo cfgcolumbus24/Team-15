@@ -42,6 +42,10 @@ function Dropdown() {
     navigate("/Home");
   };
 
+  const handleFinancials = () => {
+    navigate("/Financials");
+  };
+
   const DrawerList = (
     <Box
       sx={{ width: 250 }}
@@ -74,6 +78,14 @@ function Dropdown() {
               <AnalyticsIcon />
             </ListItemIcon>
             <ListItemText primary="Demographics" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleFinancials}> {/* Add click handler for Demographics */}
+            <ListItemIcon>
+              <AnalyticsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Financials" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
