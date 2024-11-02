@@ -12,7 +12,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
 
 function Patient() {
-  const { id } = useParams();
+  const { patientName } = useParams();
 
   return (
     <Box p={0} bgcolor={grey[100]} minHeight="100vh">
@@ -51,7 +51,7 @@ function Patient() {
         <Typography variant="h4" gutterBottom color={blue[800]} align="center">
           Medical Chart
         </Typography>
-        <PatientInfo patientId={id} />
+        <PatientInfo patientName={decodeURIComponent(patientName || '')} />
         <VitalSigns />
         <Symptoms />
         <MedicalHistory />
