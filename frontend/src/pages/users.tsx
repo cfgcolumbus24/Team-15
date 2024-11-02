@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, TextField, Card, CardContent, Typography } from '@mui/material';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { useNavigate } from 'react-router-dom';
 
 interface User {
   id: number;
@@ -9,6 +9,7 @@ interface User {
 }
 
 const Patients: React.FC = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [users] = useState<User[]>([
     { id: 1, name: 'John Doe', age: 30 },
@@ -19,6 +20,10 @@ const Patients: React.FC = () => {
   const filteredUsers = users.filter(user =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handlePatientClick = (userId: number) => {
+    navigate(`/patient/${userId}`);
+  };
 
   return (
     <Box sx={{ padding: 3, backgroundColor: 'white', height: '100vh' }}>
@@ -35,20 +40,16 @@ const Patients: React.FC = () => {
       />
       <Box>
         {filteredUsers.map((user) => (
-          <Link
-            to={`/patient/${user.id}`} // Link to the internal route
+          <Card
             key={user.id}
-            style={{ textDecoration: 'none' }}
+            sx={{ marginBottom: 2, padding: 2, borderRadius: 2, cursor: 'pointer', backgroundColor: '#e3f2fd' }}
+            onClick={() => handlePatientClick(user.id)}
           >
-            <Card
-              sx={{ marginBottom: 2, padding: 2, borderRadius: 2, cursor: 'pointer', backgroundColor: '#e3f2fd' }}
-            >
-              <CardContent>
-                <Typography variant="h6">{user.name}</Typography>
-                <Typography color="textSecondary">Age: {user.age}</Typography>
-              </CardContent>
-            </Card>
-          </Link>
+            <CardContent>
+              <Typography variant="h6">{user.name}</Typography>
+              <Typography color="textSecondary">Age: {user.age}</Typography>
+            </CardContent>
+          </Card>
         ))}
       </Box>
     </Box>
@@ -56,4 +57,3 @@ const Patients: React.FC = () => {
 };
 
 export default Patients;
-
