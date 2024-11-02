@@ -30,8 +30,8 @@ import axios from 'axios';
 
 const budgetAllocationData = [
   { category: 'Program Services', amount: 15000 },
-  { category: 'Fundraising', amount: 15000 },
-  { category: 'Philanthropy', amount: 15000 },
+  { category: 'Fundraising', amount: 20000 },
+  { category: 'Philanthropy', amount: 27000 },
 ];
 
 
@@ -131,7 +131,7 @@ const Financials: React.FC = () => {
                 <Box display="flex" justifyContent="center" alignItems="center">
                   <ResponsiveContainer width="100%" height={250}>
                     <PieChart>
-                      <Pie data={budgetAllocationData} dataKey="amount" nameKey="category" cx="50%" cy="50%" outerRadius={50} fill={blue[400]} label>
+                      <Pie data={budgetAllocationData} dataKey="amount" nameKey="category" cx="50%" cy="50%" outerRadius={80} fill={blue[400]} label>
                         {budgetAllocationData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={[purple[400], blue[500], teal[300]][index % 3]} />
                         ))}
@@ -176,7 +176,7 @@ const Financials: React.FC = () => {
                   Monthly Spending
                 </Typography>
                 <Box display="flex" justifyContent="center" alignItems="center">
-                  <ResponsiveContainer width="100%" height={200}>
+                  <ResponsiveContainer width="100%" height={300}>
                     <LineChart data={monthlySpendingData} margin={{ top: 20, right: 50, left: 50, bottom: 20 }}>
                       <XAxis dataKey="month" label={{ value: 'Month', position: 'insideBottom', offset: -5 }} />
                       <YAxis 

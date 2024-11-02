@@ -25,6 +25,7 @@ public class ClinicianService {
     public List<Clinician> getClinicians() {
         return clinicianRepository.findAll();
     }
+
     public boolean validateLogin(String firstName, String lastName) {
         Optional<Clinician> clinician = clinicianRepository.findByFirstNameAndLastName(firstName, lastName);
         return clinician.isPresent();
@@ -41,6 +42,7 @@ public class ClinicianService {
         results.addAll(byLastName);
         return results;
     }
+
     public List<Clinician> getClinicianBySpecialty(String specialty) {
         return clinicianRepository.findBySpecialty(specialty);
     }
@@ -48,6 +50,7 @@ public class ClinicianService {
     public Clinician getClinicianById(int id) {
         return clinicianRepository.findById(id);
     }
+
     public Set<Patient> getClinicianPatients(String id) {
         return clinicianRepository.findById(Integer.parseInt(id)).getClients();
     }

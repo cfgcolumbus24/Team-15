@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
 import java.util.*;
 
-
 @RestController
 @RequestMapping("/api/v1/patients")
 @CrossOrigin(origins = "*")
@@ -23,11 +22,16 @@ public class PatientController {
     public @ResponseBody String getPatient() {
         return "Hello World!";
     }
+
     @GetMapping("/all")
     public List<Patient> getAllPatients() {
 
         List<Patient> patientList = (List<Patient>) patientRepository.findAll();
-        patientList.forEach((n) -> {n.getDoctors().forEach((i) -> {i.setClients(null);});});
+        patientList.forEach((n) -> {
+            n.getDoctors().forEach((i) -> {
+                i.setClients(null);
+            });
+        });
         return patientList;
     }
 
@@ -39,14 +43,14 @@ public class PatientController {
         });
         return p;
     }
-    
+
     @GetMapping("/age/{age}")
     public List<Patient> getPatientsUnderAge(@PathVariable int age) {
         List<Patient> allPatients = (List<Patient>) patientRepository.findAll();
         List<Patient> filteredPatients = allPatients.stream()
-            .filter(patient -> patient.getAge() < age)
-            .collect(Collectors.toList());
-        
+                .filter(patient -> patient.getAge() < age)
+                .collect(Collectors.toList());
+
         // Clear circular references
         filteredPatients.forEach(p -> p.getDoctors().forEach(d -> d.setClients(null)));
         return filteredPatients;
@@ -56,9 +60,9 @@ public class PatientController {
     public List<Patient> getPatientsByRace(@PathVariable String race) {
         List<Patient> allPatients = (List<Patient>) patientRepository.findAll();
         List<Patient> filteredPatients = allPatients.stream()
-            .filter(patient -> patient.getRace().equalsIgnoreCase(race))
-            .collect(Collectors.toList());
-        
+                .filter(patient -> patient.getRace().equalsIgnoreCase(race))
+                .collect(Collectors.toList());
+
         // Clear circular references
         filteredPatients.forEach(p -> p.getDoctors().forEach(d -> d.setClients(null)));
         return filteredPatients;
@@ -68,13 +72,13 @@ public class PatientController {
     public List<Map<String, String>> getAllPatientsDOB() {
         List<Patient> allPatients = (List<Patient>) patientRepository.findAll();
         return allPatients.stream()
-            .map(patient -> {
-                Map<String, String> dobMap = new HashMap<>();
-                dobMap.put("name", patient.getName());
-                dobMap.put("dob", patient.getDob());
-                return dobMap;
-            })
-            .collect(Collectors.toList());
+                .map(patient -> {
+                    Map<String, String> dobMap = new HashMap<>();
+                    dobMap.put("name", patient.getName());
+                    dobMap.put("dob", patient.getDob());
+                    return dobMap;
+                })
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/clinicians")
@@ -153,7 +157,7 @@ public class PatientController {
                     demographics.put(ageString, demographics.get(ageString) + 1);
                 }
             });
-        } else if (demographic.equals("income")){
+        } else if (demographic.equals("income")) {
             List<Patient> patientList = new ArrayList<>();
             patientRepository.findAll().forEach(patientList::add);
             count = patientList.size();
@@ -181,6 +185,5 @@ public class PatientController {
 
         return demographics;
     }
-
 
 }
