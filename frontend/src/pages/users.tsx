@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Box, TextField, Card, CardContent, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
 
 interface User {
   id: number;
@@ -20,7 +19,6 @@ const Patients: React.FC = () => {
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-
   return (
     <Box sx={{ padding: 3, backgroundColor: 'white', height: '100vh' }}>
       <Typography variant="h4" gutterBottom>
@@ -36,7 +34,13 @@ const Patients: React.FC = () => {
       />
       <Box>
         {filteredUsers.map((user) => (
-          <Link to={`/user/${user.id}`} key={user.id} style={{ textDecoration: 'none' }}>
+          <a
+            href={`https://example.com/user/${user.id}`} // Replace with the actual URL you want to redirect to
+            key={user.id}
+            style={{ textDecoration: 'none' }}
+            target="_blank" // Open in a new tab
+            rel="noopener noreferrer" // Security best practice
+          >
             <Card
               sx={{ marginBottom: 2, padding: 2, borderRadius: 2, cursor: 'pointer', backgroundColor: '#e3f2fd' }}
             >
@@ -45,7 +49,7 @@ const Patients: React.FC = () => {
                 <Typography color="textSecondary">Age: {user.age}</Typography>
               </CardContent>
             </Card>
-          </Link>
+          </a>
         ))}
       </Box>
     </Box>
