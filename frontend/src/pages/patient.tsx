@@ -4,6 +4,4 @@ function ListGroup(){
     let items = [
         "Name"
     ]
-}
-
-    
+}  

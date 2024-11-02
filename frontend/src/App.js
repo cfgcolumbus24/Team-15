@@ -9,9 +9,6 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginFinal />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/option1" element={<Option1 />} />
-        <Route path="/option2" element={<Option2 />} />
-        <Route path="/option3" element={<Option3 />} />
       </Routes>
     </Router>
   );
