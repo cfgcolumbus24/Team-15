@@ -28,7 +28,7 @@ public class Patient {
 
     private String sex;
 
-    private int income;
+    private String income;
 
     private String history;
 
@@ -41,7 +41,7 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(String name, int age, String height, int weight, String dob, String race, String sex, int income, String history, String gender) {
+    public Patient(String name, int age, String height, int weight, String dob, String race, String sex, String income, String history, String gender) {
         this.name = name;
         this.age = age;
         this.height = height;
@@ -119,11 +119,11 @@ public class Patient {
         this.sex = sex;
     }
 
-    public int getIncome() {
+    public String getIncome() {
         return income;
     }
 
-    public void setIncome(int income) {
+    public void setIncome(String income) {
         this.income = income;
     }
 

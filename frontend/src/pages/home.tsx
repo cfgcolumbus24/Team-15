@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Dropdown from './list.tsx';
-
 import {
   Box,
   Card,
@@ -16,6 +15,8 @@ import {
   TableRow,
   Paper,
   IconButton,
+  TextField,
+  Button
 } from '@mui/material';
 import {
   LineChart,
@@ -29,8 +30,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-// Sample hardcoded data
-const totalPatients = 1200;
 const patientProgressData = [
   { month: 'Jan', improved: 70, stable: 25, worsened: 5 },
   { month: 'Feb', improved: 72, stable: 22, worsened: 6 },
@@ -54,6 +53,32 @@ const upcomingAppointments = [
 ];
 
 const Home: React.FC = () => {
+  const [totalPatients, setTotalPatients] = useState<number>(0);
+  const [inputValue, setInputValue] = useState<string>('');
+
+  useEffect(() => {
+    fetchTotalPatients();
+  }, []);
+
+  const fetchTotalPatients = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/patients/all');
+      if (!response.ok) {
+        throw new Error('Failed to fetch patients');
+      }
+      const data = await response.json();
+      setTotalPatients(data.length);
+    } catch (error) {
+      console.error('Error fetching total patients:', error);
+      setTotalPatients(0);
+    }
+  };
+
+  const handleExecute = () => {
+    console.log('Executed with input:', inputValue);
+    // Add any additional logic for handling input here
+  };
+
   return (
     <Box p={0} bgcolor={grey[100]} minHeight="100vh">
       {/* Header */}
@@ -62,32 +87,31 @@ const Home: React.FC = () => {
         mb={4}
         p={3}
         sx={{
-            background: `linear-gradient(135deg, ${blue[800]} 30%, ${blue[600]} 90%)`,
-            color: 'white',
-            borderRadius: 0,
-            position: 'relative',
+          background: `linear-gradient(135deg, ${blue[800]} 30%, ${blue[600]} 90%)`,
+          color: 'white',
+          borderRadius: 0,
+          position: 'relative',
         }}
-        >
-        <Dropdown /> {/* Rendered with fixed positioning */}
+      >
+        <Dropdown />
         
         <Typography variant="h3" fontWeight="bold">
-            Netcare Clinician Dashboard
+          Netcare Clinician Dashboard
         </Typography>
         <Typography variant="subtitle1">
-            A comprehensive view of patient statistics and trends
+          A comprehensive view of patient statistics and trends
         </Typography>
 
         {/* Icons for Settings and Profile */}
         <Box position="absolute" top={16} right={16} display="flex" gap={2}>
-            <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
+          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
             <SettingsIcon sx={{ fontSize: 30 }} />
-            </IconButton>
-            <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
+          </IconButton>
+          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
             <AccountCircleIcon sx={{ fontSize: 30 }} />
-            </IconButton>
+          </IconButton>
         </Box>
-        </Box>
-
+      </Box>
 
       <Grid container spacing={3} justifyContent="center">
         {/* Upcoming Appointments Card */}
@@ -133,8 +157,8 @@ const Home: React.FC = () => {
         <Grid item xs={12} sm={6} md={4}>
           <Card sx={{ boxShadow: 4, borderRadius: 3, height: '100%', display: 'flex', flexDirection: 'column' }}>
             <CardContent sx={{ padding: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Avatar sx={{ bgcolor: purple[500], width: 64, height: 64, mr: 2 }}>
-                <PersonIcon sx={{ fontSize: 40, color: 'white' }} />
+              <Avatar sx={{ bgcolor: purple[500], width: 80, height: 80, mr: 2 }}>
+                <PersonIcon sx={{ fontSize: 55, color: 'white' }} />
               </Avatar>
               <Box textAlign="left">
                 <Typography variant="h6" color="text.secondary">
@@ -177,6 +201,30 @@ const Home: React.FC = () => {
           </CardContent>
         </Card>
       </Grid>
+
+      {/* Input field and Execute button */}
+      <Box display="flex" justifyContent="center" mt={4}>
+        <TextField
+          label="Enter / to Search"
+          variant="outlined"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          sx={{ 
+            marginRight: 2, 
+            width: '400px', // Increase the width as needed
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '8px' // Adjust the border radius
+            }
+          }}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleExecute}
+        >
+          Execute
+        </Button>
+      </Box>
 
       {/* Footer */}
       <Box textAlign="center" mt={4}>
