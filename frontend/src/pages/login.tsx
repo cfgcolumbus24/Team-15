@@ -26,28 +26,28 @@ const LoginFinal = () => {
     console.log(firstName)
     const passwordBox = document.getElementsByName("password")[0] as HTMLInputElement;
     const lastName = passwordBox.value;
-    axios.post(url + 'clinician/login', {firstName: firstName, lastName: lastName} )
-        .then(response => {
-           setSnackbarMessage('Login successful!');
-           setSnackbarSeverity('success');
-           setOpenSnackbar(true);
-           navigate("/Home", { state: { message: 'Login successful!', severity: 'success' } });
-        }).catch(error => {
-            console.log(error)
-            if(error.response.status === 401) {
-                setSnackbarMessage('Invalid login credentials!');
-                setSnackbarSeverity('error');
-                setOpenSnackbar(true);
-            } else {
-                alert("Something went wrong, try again!")
-            }
-            console.error(error);
-        });
+    axios.post(url + 'clinician/login', { firstName: firstName, lastName: lastName })
+      .then(response => {
+        setSnackbarMessage('Login successful!');
+        setSnackbarSeverity('success');
+        setOpenSnackbar(true);
+        navigate("/Home", { state: { message: 'Login successful!', severity: 'success' } });
+      }).catch(error => {
+        console.log(error)
+        if (error.response.status === 401) {
+          setSnackbarMessage('Invalid login credentials!');
+          setSnackbarSeverity('error');
+          setOpenSnackbar(true);
+        } else {
+          alert("Something went wrong, try again!")
+        }
+        console.error(error);
+      });
   };
 
   const handleCloseSnackbar = (event: React.SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
     if (reason === 'clickaway') {
-      return; 
+      return;
     }
     setOpenSnackbar(false);
   };
@@ -57,11 +57,11 @@ const LoginFinal = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-start", 
-        justifyContent: "flex-start", 
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
         height: "100vh",
         backgroundColor: "#f5f5f5",
-        padding: "20px", 
+        padding: "20px",
         background: "linear-gradient(135deg, #f5f5f5, #e0f7fa)"
       }}
     >
@@ -69,20 +69,20 @@ const LoginFinal = () => {
       <Typography
         level="h2"
         component="h1"
-        sx={{ 
-          fontWeight: "bold", 
-          fontSize: "2.5rem", 
-          mb: 2 
+        sx={{
+          fontWeight: "bold",
+          fontSize: "2.5rem",
+          mb: 2
         }}
       >
         Netcare
       </Typography>
       <Sheet
         sx={{
-          width: 500, 
-          height: 450, 
+          width: 500,
+          height: 450,
           mx: "auto",
-          my: 0, 
+          my: 0,
           py: 4,
           px: 4,
           display: "flex",
@@ -90,7 +90,7 @@ const LoginFinal = () => {
           gap: 2,
           borderRadius: "md",
           boxShadow: "lg",
-          marginTop: "160px", 
+          marginTop: "160px",
         }}
         variant="outlined"
       >
@@ -108,8 +108,8 @@ const LoginFinal = () => {
             type="text"
             placeholder="username"
             sx={{
-              height: '48px', 
-              fontSize: '1rem', 
+              height: '48px',
+              fontSize: '1rem',
             }}
           />
         </FormControl>
@@ -120,23 +120,23 @@ const LoginFinal = () => {
             type="password"
             placeholder="password"
             sx={{
-              height: '48px', 
-              fontSize: '1rem', 
+              height: '48px',
+              fontSize: '1rem',
             }}
           />
         </FormControl>
-        <Button 
+        <Button
           sx={{
-            mt: 2, 
+            mt: 2,
             height: '48px',
             fontSize: '1rem',
-          }} 
+          }}
           onClick={handleLogin}
         >
-          Log in 
+          Log in
         </Button>
       </Sheet>
-          
+
       {/* Snackbar for alerts */}
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }} style={{ backgroundColor: snackbarSeverity === 'success' ? '#4caf50' : '#f44336' }}>

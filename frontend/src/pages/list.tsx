@@ -24,7 +24,7 @@ function Dropdown() {
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
-  
+
   const navigate = useNavigate();
 
   const handleDemographics = () => {
@@ -58,24 +58,24 @@ function Dropdown() {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-    <List>
-      <ListItem disablePadding>
-        <ListItemButton onClick={handlePatients}> {/* Add click handler for Patients */}
-          <ListItemIcon>
-            <EmojiPeopleIcon/>
-          </ListItemIcon>
-          <ListItemText primary="Patients" />
-        </ListItemButton>
-      </ListItem>
-      {["Clinicians"].map((text, index) => (
-        <ListItem key={text} disablePadding>
-          <ListItemButton onClick={handleClinicians}>
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton onClick={handlePatients}> {/* Add click handler for Patients */}
             <ListItemIcon>
-              <AdminPanelSettingsIcon/>
+              <EmojiPeopleIcon />
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary="Patients" />
           </ListItemButton>
         </ListItem>
+        {["Clinicians"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton onClick={handleClinicians}>
+              <ListItemIcon>
+                <AdminPanelSettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
         ))}
         <ListItem disablePadding>
           <ListItemButton onClick={handleDemographics}> {/* Add click handler for Demographics */}
@@ -108,7 +108,7 @@ function Dropdown() {
           <ListItem key={text} disablePadding>
             <ListItemButton >
               <ListItemIcon>
-                <SettingsIcon/>
+                <SettingsIcon />
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -118,7 +118,7 @@ function Dropdown() {
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={handleLogout}>
               <ListItemIcon>
-                <LogoutIcon/>
+                <LogoutIcon />
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>

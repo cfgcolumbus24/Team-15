@@ -18,12 +18,12 @@ const PlainText: React.FC = () => {
   const renderData = () => {
     if (Array.isArray(data)) {
       return data.map((item, index) => (
-        <Paper 
-          key={index} 
-          elevation={3} 
-          sx={{ 
-            p: 2, 
-            mb: 2, 
+        <Paper
+          key={index}
+          elevation={3}
+          sx={{
+            p: 2,
+            mb: 2,
             backgroundColor: 'white',
             '&:hover': {
               transform: 'scale(1.01)',
@@ -40,10 +40,10 @@ const PlainText: React.FC = () => {
       ));
     } else {
       return (
-        <Paper 
-          elevation={3} 
-          sx={{ 
-            p: 2, 
+        <Paper
+          elevation={3}
+          sx={{
+            p: 2,
             backgroundColor: 'white',
             '&:hover': {
               transform: 'scale(1.01)',
@@ -73,7 +73,7 @@ const PlainText: React.FC = () => {
         }}
       >
         <Dropdown />
-        
+
         <Typography variant="h3" fontWeight="bold">
           Command Results
         </Typography>
