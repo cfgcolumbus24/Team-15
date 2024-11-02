@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Dropdown from './list.tsx';
 import {
   Box,
@@ -7,38 +7,49 @@ import {
   Typography,
   Grid,
   IconButton,
+  TextField, // Import TextField for the search input
 } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { blue, grey, purple, teal, orange } from '@mui/material/colors';
-import axios from 'axios'
-// Sample data for clinician information
-const colors = [teal[500], orange[500], purple[500], blue[500]]
+import axios from 'axios';
+
+const colors = [teal[500], orange[500], purple[500], blue[500]];
 
 const ClinicianOverview: React.FC = () => {
-const [clinicianData, setClinicianData] = useState([])
-useEffect(() => {
-        const url = 'http://localhost:8080/api/v1/'
-        const fetchClinis = async () => {
-            const response = axios.get(url+ 'clinician/all').then(response => {
-                console.log(response)
-                let count = 0
-                let clinis = []
-                response.data.forEach((clini) => {
-                    clinis.push({name: clini.firstName + ' ' + clini.lastName, position: clini.specialty, color: colors[count % colors.length], address: clini.address })
-                    count +=1
-                })
-                setClinicianData(clinis)
-              }).catch(error => {
-                 alert("Error!")
-              console.error(error);
-            });
-        }
-        fetchClinis();
-      }, []);
+  const [clinicianData, setClinicianData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(''); // State for search term
+
+  useEffect(() => {
+    const url = 'http://localhost:8080/api/v1/';
+    const fetchClinis = async () => {
+      try {
+        const response = await axios.get(url + 'clinician/all');
+        console.log(response);
+        let count = 0;
+        let clinis = [];
+        response.data.forEach((clini) => {
+          if (count < 50) {
+            clinis.push({name: clini.firstName + ' ' + clini.lastName, position: clini.specialty, color: colors[count % colors.length], address: clini.address })
+            count +=1
+          }
+        });
+        setClinicianData(clinis);
+      } catch (error) {
+        alert("Error!");
+        console.error(error);
+      }
+    };
+    fetchClinis();
+  }, []);
+
+  // Filter clinicians based on the search term
+  const filteredClinicians = clinicianData.filter((clinician) =>
+    clinician.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <Box p={0} bgcolor={grey[100]} minHeight="100vh">
-      {/* Header */}
       <Box
         textAlign="center"
         mb={4}
@@ -51,7 +62,7 @@ useEffect(() => {
         }}
       >
         <Dropdown />
-        
+
         <Typography variant="h3" fontWeight="bold">
           Clinician Overview
         </Typography>
@@ -70,19 +81,31 @@ useEffect(() => {
         </Box>
       </Box>
 
+      {/* Search Bar */}
+      <Box p={3} bgcolor={grey[100]}>
+        <TextField
+          label="Search Clinicians"
+          variant="outlined"
+          fullWidth
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          sx={{ mb: 2 }} // Add margin bottom for spacing
+        />
+      </Box>
+
       <Box p={3} bgcolor={grey[100]} minHeight="100vh">
         <Grid container spacing={3} justifyContent="center">
-          {clinicianData.map((clinician, index) => (
+          {filteredClinicians.map((clinician, index) => (
             <Grid item xs={12} sm={6} md={6} key={index}>
-              <Card 
-                sx={{ 
-                  boxShadow: 4, 
-                  borderRadius: 3, 
-                  height: 200, // Set a fixed height for square shape
-                  display: 'flex', 
-                  alignItems: 'center', 
+              <Card
+                sx={{
+                  boxShadow: 4,
+                  borderRadius: 3,
+                  height: 200,
+                  display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'center',
-                  margin: 'auto' // Center the card
+                  margin: 'auto',
                 }}
               >
                 <CardContent sx={{ textAlign: 'center' }}>
@@ -94,7 +117,7 @@ useEffect(() => {
                     {clinician.position}
                   </Typography>
                   <Typography variant="subtitle2" color="text.secondary">
-                                      {clinician.address}
+                    {clinician.address}
                   </Typography>
                 </CardContent>
               </Card>
