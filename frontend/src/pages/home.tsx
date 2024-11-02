@@ -82,7 +82,7 @@ const HomePage: React.FC = () => {
       </Box>
 
       {/*Code for the dropdown*/}
-      <Box mb={4} textAlign="center">
+      <Box mb={4} textAlign="left">
         <Dropdown />
       </Box>
 
