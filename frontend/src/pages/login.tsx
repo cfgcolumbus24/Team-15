@@ -135,7 +135,7 @@ const LoginFinal = () => {
           Log in 
         </Button>
       </Sheet>
-
+          
       {/* Snackbar for alerts */}
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }} style={{ backgroundColor: snackbarSeverity === 'success' ? '#4caf50' : '#f44336' }}>
