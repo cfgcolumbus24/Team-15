@@ -1,6 +1,8 @@
-DROP TABLE IF EXISTS clinician_clients;
-DROP TABLE IF EXISTS patient;
-DROP TABLE IF EXISTS clinician;
+DROP TABLE IF EXISTS clinician_clients CASCADE;
+DROP TABLE IF EXISTS patient CASCADE;
+DROP TABLE IF EXISTS clinician CASCADE;
+DROP TABLE IF EXISTS monthly_budget;
+
 
 CREATE TABLE clinician
 (
@@ -25,6 +27,13 @@ CREATE TABLE patient
     income VarChar(20),
     history TEXT,
     dob VARCHAR(20)
+);
+
+CREATE TABLE monthly_budget
+(
+   id SERIAL PRIMARY KEY,
+   month_name VARCHAR(10),
+   budget INT
 );
 
 CREATE TABLE clinician_clients
@@ -110,3 +119,19 @@ VALUES
     (9, 18),
     (9, 19),
     (10, 20);
+INSERT INTO monthly_budget
+    (month_name, budget)
+VALUES
+    ('January', 10000),
+    ('February', 20000),
+    ('March', 23500),
+    ('April', 17650),
+    ('May', 14305),
+    ('June', 17500),
+    ('July', 14300),
+    ('August', 12980),
+    ('September', 22000),
+    ('October', 8000),
+    ('November', 17000),
+    ('December', 18000);
+

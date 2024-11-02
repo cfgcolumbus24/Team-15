@@ -33,6 +33,7 @@ import { pink, blue, green, orange, purple, grey, red } from '@mui/material/colo
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useNavigate } from 'react-router-dom';
 
 const patientProgressData = [
   { month: 'Jan', improved: 70, stable: 25, worsened: 5 },
@@ -57,13 +58,14 @@ const upcomingAppointments = [
 ];
 
 const commands = [
-  'get Age less than 20',
+  'get Age less than 30',
   'get Race{ Asian }',
   'get Date OF Birth',
   'get All Clinicians',
 ];
 
 const Home: React.FC = () => {
+  const navigate = useNavigate(); 
   const [totalPatients, setTotalPatients] = useState<number>(0);
   const [inputValue, setInputValue] = useState<string>('');
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
@@ -101,9 +103,42 @@ const Home: React.FC = () => {
     setShowDropdown(false);
   };
 
-  const handleExecute = () => {
-    console.log('Executed with input:', inputValue);
-    // Add any additional logic for handling input here
+  const handleExecute = async () => {
+    const baseUrl = 'http://localhost:8080/api/v1/patients';
+    
+    try {
+      let response;
+      const command = inputValue.replace('/', '').toLowerCase();
+      
+      if (command.startsWith('get age less than')) {
+        const age = command.split(' ').pop();
+        response = await fetch(`${baseUrl}/age/${age}`);
+        // console.log(response);
+      } 
+      else if (command.startsWith('get race')) {
+        const matches = command.match(/\{([^}]+)\}/);
+        if (!matches) {
+            console.error('Invalid race format');
+            return;
+        }
+        const race = matches[1].trim();
+        response = await fetch(`${baseUrl}/race/${race}`);
+      }
+      else if (command === 'get date of birth') {
+        response = await fetch(`${baseUrl}/dob`);
+      }
+      else if (command === 'get all clinicians') {
+        response = await fetch(`${baseUrl}/clinicians`);
+      }
+
+      if (response && response.ok) {
+        const data = await response.json();
+        console.log(data)
+        navigate('/plaintext', { state: { data, command: inputValue } });
+      }
+    } catch (error) {
+      console.error('Error executing command:', error);
+    }
   };
 
   return (

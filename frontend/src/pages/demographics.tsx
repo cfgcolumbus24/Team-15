@@ -98,7 +98,7 @@ const Demographics: React.FC = () => {
         const thirdResponse = axios.get(url+ 'patients/demo/gender').then(response => {
                                 console.log(response)
                                 const tempGenderData: any[] = []
-                                Object.keys(response.data).forEach((a:String) => {
+                                Object.keys(response.data).forEach((a) => {
                                     tempGenderData.push({name: a, value: response.data[a]})
                                 });
                                 setGenderData(tempGenderData)
@@ -155,7 +155,7 @@ const Demographics: React.FC = () => {
             </IconButton>
         </Box>
         </Box>
-    <Box p={3} bgcolor={grey[100]} minHeight="100vh">
+    <Box p={3} bgcolor={grey[100]} >
 
       {/* Demographics Cards */}
       <Grid container spacing={3} justifyContent="center">
