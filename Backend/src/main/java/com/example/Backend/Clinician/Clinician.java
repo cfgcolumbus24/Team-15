@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
-import java.util.List;
+
 import java.util.Set;
 
 @Component
@@ -17,7 +17,9 @@ public class Clinician {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+
+    private String firstName;
+    private String lastName;
     private String address;
     private String specialty;
 
@@ -33,8 +35,9 @@ public class Clinician {
     public Clinician() {
     }
 
-    public Clinician(String name, String address, String specialty) {
-        this.name = name;
+    public Clinician(String firstName, String lastName, String address, String specialty) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.address = address;
         this.specialty = specialty;
         this.clients = new HashSet<>();
@@ -49,12 +52,21 @@ public class Clinician {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    // Add getters and setters for firstName and lastName
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getAddress() {

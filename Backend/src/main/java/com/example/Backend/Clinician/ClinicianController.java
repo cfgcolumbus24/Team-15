@@ -30,4 +30,6 @@ public class ClinicianController {
     public List<Clinician> getClinicianBySpecialty(@PathVariable String specialty) {
         return clinicianService.getClinicianBySpecialty(specialty);
     }
+
+    
 }
