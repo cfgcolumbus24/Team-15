@@ -30,4 +30,10 @@ public class ClinicianController {
     public List<Clinician> getClinicianBySpecialty(@PathVariable String specialty) {
         return clinicianService.getClinicianBySpecialty(specialty);
     }
+
+    @GetMapping("/address/{address}")
+    public List<Clinician> getClinicianByAddress(@PathVariable String address) {
+        return clinicianService.getClinicianByAddress(address);
+    }
+
 }

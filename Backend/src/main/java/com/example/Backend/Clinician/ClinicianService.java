@@ -26,4 +26,8 @@ public class ClinicianService {
     public List<Clinician> getClinicianBySpecialty(String specialty) {
         return clinicianRepository.findBySpecialty(specialty);
     }
+
+    public List<Clinician> getClinicianByAddress(String Address){
+        return clinicianRepository.findByAddress(Address);
+    }
 }
