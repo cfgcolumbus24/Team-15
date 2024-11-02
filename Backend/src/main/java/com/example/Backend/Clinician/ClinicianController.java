@@ -54,6 +54,7 @@ public class ClinicianController {
         return cliniList;
     }
     @PostMapping("/login")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         boolean isValid = clinicianService.validateLogin(
             loginRequest.getFirstName(), 

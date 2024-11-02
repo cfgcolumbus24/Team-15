@@ -38,18 +38,21 @@ public class PatientController {
         return p;
     }
 
-    @GetMapping("/demo/{demographic}")
-    public HashMap<String, Double> getPatientDemographics(@PathVariable String demographic) {
+    @GetMapping("/demo")
+    public HashMap<String, HashMap<String, Double>> getPatientDemographics() {
         HashMap<String, Double> demographics = new HashMap<>();
+        HashMap<String, Double> genderDemographics = new HashMap<>();
+        HashMap<String, Double> weightDemographics = new HashMap<>();
+        HashMap<String, Double> incomeDemographics = new HashMap<>();
+        HashMap<String, Double> raceDemographics = new HashMap<>();
+
         int count = 0;
-        if (demographic.equals("age")) {
             demographics.put("<18", 0.0);
             demographics.put("18-25", 0.0);
             demographics.put("26-35", 0.0);
             demographics.put("36-45", 0.0);
             demographics.put("46-60", 0.0);
             demographics.put("60+", 0.0);
-
             List<Patient> patientList = new ArrayList<>();
             patientRepository.findAll().forEach(patientList::add);
             count = patientList.size();
@@ -70,74 +73,58 @@ public class PatientController {
                 }
 
             });
-        } else if (demographic.equals("race")) {
-            List<Patient> patientList = new ArrayList<>();
-            patientRepository.findAll().forEach(patientList::add);
-            count = patientList.size();
             patientList.forEach((n) -> {
                 String ageString = n.getRace();
-                if (!demographics.containsKey(ageString)) {
-                    demographics.put(ageString, 1.0);
+                if (!raceDemographics.containsKey(ageString)) {
+                    raceDemographics.put(ageString, 1.0);
                 } else {
-                    demographics.put(ageString, demographics.get(ageString) + 1);
+                    raceDemographics.put(ageString, raceDemographics.get(ageString) + 1);
                 }
             });
-        } else if (demographic.equals("gender")) {
-            List<Patient> patientList = new ArrayList<>();
-            patientRepository.findAll().forEach(patientList::add);
-            count = patientList.size();
+
             patientList.forEach((n) -> {
                 String ageString = n.getGender();
-                if (!demographics.containsKey(ageString)) {
-                    demographics.put(ageString, 1.0);
+                if (!genderDemographics.containsKey(ageString)) {
+                    genderDemographics.put(ageString, 1.0);
                 } else {
-                    demographics.put(ageString, demographics.get(ageString) + 1);
+                    genderDemographics.put(ageString, genderDemographics.get(ageString) + 1);
                 }
             });
-        } else if (demographic.equals("weight")) {
-            List<Patient> patientList = new ArrayList<>();
-            patientRepository.findAll().forEach(patientList::add);
-            count = patientList.size();
             patientList.forEach((n) -> {
                 String ageString = String.valueOf(n.getWeight());
-                if (!demographics.containsKey(ageString)) {
-                    demographics.put(ageString, 1.0);
+                if (!weightDemographics.containsKey(ageString)) {
+                    weightDemographics.put(ageString, 1.0);
                 } else {
-                    demographics.put(ageString, demographics.get(ageString) + 1);
+                    weightDemographics.put(ageString, weightDemographics.get(ageString) + 1);
                 }
             });
-        } else if (demographic.equals("income")){
-            List<Patient> patientList = new ArrayList<>();
-            patientRepository.findAll().forEach(patientList::add);
-            count = patientList.size();
             patientList.forEach((n) -> {
                 String ageString = n.getIncome();
-                if (!demographics.containsKey(ageString)) {
-                    demographics.put(ageString, 1.0);
+                if (!incomeDemographics.containsKey(ageString)) {
+                    incomeDemographics.put(ageString, 1.0);
                 } else {
-                    demographics.put(ageString, demographics.get(ageString) + 1);
+                    incomeDemographics.put(ageString, incomeDemographics.get(ageString) + 1);
                 }
             });
-        } else {
-            List<Patient> patientList = new ArrayList<>();
-            patientRepository.findAll().forEach(patientList::add);
-            count = patientList.size();
-            patientList.forEach((n) -> {
-                String ageString = n.getSex();
-                if (!demographics.containsKey(ageString)) {
-                    demographics.put(ageString, 1.0);
-                } else {
-                    demographics.put(ageString, demographics.get(ageString) + 1);
-                }
-            });
+        for (String key : demographics.keySet()) {
+            demographics.put(key, demographics.get(key) / count);
         }
-        if (!demographic.equals("income")) {
-            for (String key : demographics.keySet()) {
-                demographics.put(key, demographics.get(key) / count);
-            }
+        for (String key : weightDemographics.keySet()) {
+            weightDemographics.put(key, weightDemographics.get(key) / count);
         }
+        for (String key : raceDemographics.keySet()) {
+            raceDemographics.put(key, raceDemographics.get(key) / count);
+        }
+        for (String key : genderDemographics.keySet()) {
+            genderDemographics.put(key, genderDemographics.get(key) / count);
+        }
+        HashMap<String, HashMap<String, Double>> allDemographics = new HashMap<>();
+        allDemographics.put("age", demographics);
+        allDemographics.put("weight", weightDemographics);
+        allDemographics.put("race", raceDemographics);
+        allDemographics.put("gender", genderDemographics);
 
-        return demographics;
+        return allDemographics;
     }
 
 
