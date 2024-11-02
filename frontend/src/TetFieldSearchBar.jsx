@@ -4,17 +4,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterProducts from "./FilterProducts";
 
 const TextFieldSearchBar = ({ list }) => {
-  const [input, setInput] = useState(""); // State to manage the search input
-
-  const handleInputChange = (event) => {
-    setInput(event.target.value); // Update input state on change
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-    // You can add any additional search handling logic here if needed
-  };
-
   return (
     <Box
       className="App"
@@ -22,16 +11,17 @@ const TextFieldSearchBar = ({ list }) => {
         width: 400,
         height: 660,
         margin: "100px auto",
+
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-evenly"
       }}
     >
-      <Typography variant="h4" component="h1">
+      <Typography variant="h4" component={"h1"}>
         MUI TextField Search Bar
       </Typography>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center" }}>
+      <form style={{ display: "flex", alignItems: "center" }}>
         <TextField
           id="search-bar"
           className="text"
@@ -39,8 +29,6 @@ const TextFieldSearchBar = ({ list }) => {
           variant="outlined"
           placeholder="Search..."
           size="small"
-          value={input} // Bind the value of the TextField to input state
-          onChange={handleInputChange} // Handle input changes
           sx={{
             width: 350,
             margin: "10px auto"
@@ -55,5 +43,4 @@ const TextFieldSearchBar = ({ list }) => {
     </Box>
   );
 };
-
 export default TextFieldSearchBar;
