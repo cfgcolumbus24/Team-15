@@ -15,10 +15,9 @@ import { SnackbarCloseReason } from "@mui/material/Snackbar";
 const LoginFinal = () => {
   const navigate = useNavigate();
 
-  
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success'); // Type for severity
 
   const handleLogin = () => {
     const isLoginSuccessful = true;
@@ -31,7 +30,7 @@ const LoginFinal = () => {
       setSnackbarMessage('Invalid login credentials!');
       setSnackbarSeverity('error');
     }
-    setOpenSnackbar(true);
+    setOpenSnackbar(true); 
   };
 
   const handleCloseSnackbar = (event: React.SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
@@ -100,7 +99,6 @@ const LoginFinal = () => {
               fontSize: '1rem', 
             }}
           />
-          
         </FormControl>
         <FormControl>
           <FormLabel>Password</FormLabel>
@@ -127,7 +125,7 @@ const LoginFinal = () => {
       </Sheet>
 
       {/* Snackbar for alerts */}
-      <Snackbar open={openSnackbar} autoHideDuration={1900} onClose={handleCloseSnackbar}>
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }} style={{ backgroundColor: snackbarSeverity === 'success' ? '#4caf50' : '#f44336' }}>
           {snackbarMessage}
         </Alert>
