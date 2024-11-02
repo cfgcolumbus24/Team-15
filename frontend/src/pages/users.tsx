@@ -48,8 +48,8 @@ const Patients: React.FC = () => {
     patient.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handlePatientClick = (patientId: number) => {
-    navigate(`/patient/${patientId}`);
+  const handlePatientClick = (patientName: string) => {
+    navigate(`/patient/${encodeURIComponent(patientName)}`);
   };
 
   return (
@@ -102,7 +102,7 @@ const Patients: React.FC = () => {
           <Card
             key={patient.id}
             sx={{ marginBottom: 2, padding: 2, borderRadius: 2, cursor: 'pointer', backgroundColor: '#e3f2fd' }}
-            onClick={() => handlePatientClick(patient.id)}
+            onClick={() => handlePatientClick(patient.name)}
           >
             <CardContent>
               <Typography variant="h6">{patient.name}</Typography>
