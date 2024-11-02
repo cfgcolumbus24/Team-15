@@ -1,4 +1,6 @@
 import React from 'react';
+import Dropdown from './list.tsx';
+
 import {
   Box,
   Card,
@@ -77,6 +79,11 @@ const HomePage: React.FC = () => {
         <Typography variant="subtitle1">
           A comprehensive view of patient statistics and trends
         </Typography>
+      </Box>
+
+      {/*Code for the dropdown*/}
+      <Box mb={4} textAlign="center">
+        <Dropdown />
       </Box>
 
       <Grid container spacing={3}>
