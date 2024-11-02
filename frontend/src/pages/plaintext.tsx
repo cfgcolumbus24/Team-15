@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Box, Typography, Paper, IconButton, Button, Grid } from '@mui/material';
+import { Box, Typography, Paper, IconButton, Button} from '@mui/material';
 import { blue, grey, pink, purple, teal } from '@mui/material/colors';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -18,7 +18,7 @@ interface LocationState {
 const PlainText: React.FC = () => {
   const location = useLocation();
   const { data, command } = location.state as LocationState;
-  const [viewMode, setViewMode] = useState <'table' | 'pie' | 'bar'>('table');
+  const [viewMode, setViewMode] = useState<'table' | 'pie' | 'bar'>('table');
 
   const COLORS = [blue[400], pink[400], purple[400], teal[400], grey[400]];
 
@@ -27,18 +27,18 @@ const PlainText: React.FC = () => {
     return data.every(item => Object.keys(item).length === 2);
   };
 
-  const formatDataForCharts = (data: any[]) => {
-    if (!Array.isArray(data)) return [];
-    
-    return data.map(item => {
-      const entries = Object.entries(item);
-      const value = entries[1][1];
-      return {
-        name: String(entries[0][1]),
-        value: typeof value === 'string' ? parseFloat(value) || 1 : Number(value) || 1
-      };
-    });
-  };
+const formatDataForCharts = (data: any[]) => {
+  if (!Array.isArray(data)) return [];
+  
+  return data.map(item => {
+    const entries = Object.entries(item);
+    const value = entries[1][1];
+    return {
+      name: String(entries[0][1]),
+      value: typeof value === 'string' ? parseFloat(value) || 1 : Number(value) || 1
+    };
+  });
+};
 
   const renderChartControls = () => {
     const chartData = Array.isArray(data);
