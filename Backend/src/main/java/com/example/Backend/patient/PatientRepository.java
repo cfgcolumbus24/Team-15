@@ -10,5 +10,4 @@ import com.example.Backend.Clinician.ClinicianService;
 
 public interface PatientRepository extends CrudRepository<Patient, Integer> {
     Patient findPatientByName(String name);
-
 }
