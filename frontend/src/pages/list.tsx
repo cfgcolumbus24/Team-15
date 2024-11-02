@@ -8,13 +8,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 import { useNavigate } from "react-router-dom";
 
 function Dropdown() {
@@ -71,7 +71,7 @@ function Dropdown() {
         <ListItem disablePadding>
           <ListItemButton onClick={handleDemographics}> {/* Add click handler for Demographics */}
             <ListItemIcon>
-              <MailIcon />
+              <AnalyticsIcon />
             </ListItemIcon>
             <ListItemText primary="Demographics" />
           </ListItemButton>
