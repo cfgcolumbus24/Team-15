@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS clinician_clients;
 
 CREATE TABLE clinician_clients (
     clinician_id INT, 
-    client_id INT, 
+    patient_id INT, 
     PRIMARY KEY (clinician_id, patient_id), 
     FOREIGN KEY (clinician_id) REFERENCES clinician(id) ON DELETE CASCADE,
     FOREIGN KEY (patient_id) REFERENCES patient(id) ON DELETE CASCADE
