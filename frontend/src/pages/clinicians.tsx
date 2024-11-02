@@ -9,6 +9,7 @@ import {
   IconButton,
 } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { blue, grey, purple, teal, orange } from '@mui/material/colors';
 
 // Sample data for clinician information
@@ -37,7 +38,7 @@ const ClinicianOverview: React.FC = () => {
         <Dropdown />
         
         <Typography variant="h3" fontWeight="bold">
-          Netcare Clinicians
+          Clinician Overview
         </Typography>
         <Typography variant="subtitle1">
           Tracking Clinician Performance and Patient Interactions
@@ -45,6 +46,9 @@ const ClinicianOverview: React.FC = () => {
 
         {/* Icons for Settings and Profile */}
         <Box position="absolute" top={16} right={16} display="flex" gap={2}>
+          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
+            <SettingsIcon sx={{ fontSize: 30 }} />
+          </IconButton>
           <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
             <AccountCircleIcon sx={{ fontSize: 30 }} />
           </IconButton>
@@ -54,9 +58,19 @@ const ClinicianOverview: React.FC = () => {
       <Box p={3} bgcolor={grey[100]} minHeight="100vh">
         <Grid container spacing={3} justifyContent="center">
           {clinicianData.map((clinician, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card sx={{ boxShadow: 4, borderRadius: 3 }}>
-                <CardContent sx={{ padding: 3, textAlign: 'center' }}>
+            <Grid item xs={12} sm={6} md={6} key={index}>
+              <Card 
+                sx={{ 
+                  boxShadow: 4, 
+                  borderRadius: 3, 
+                  height: 200, // Set a fixed height for square shape
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  margin: 'auto' // Center the card
+                }}
+              >
+                <CardContent sx={{ textAlign: 'center' }}>
                   <AccountCircleIcon sx={{ fontSize: 60, color: clinician.color }} />
                   <Typography variant="h6" color="text.primary" gutterBottom>
                     {clinician.name}
