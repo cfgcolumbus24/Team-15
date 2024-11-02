@@ -34,8 +34,13 @@ public class PatientController {
         clinicianRepository.save(c);
         return "Hello World!";
     }
-    @GetMapping
+    @GetMapping("/all")
     public List<Patient> getAllPatients() {
         return (List<Patient>) patientRepository.findAll();
+    }
+
+    @GetMapping("/{name}")
+    public Patient getPatientByName(@PathVariable String name) {
+        return patientRepository.findPatientByName(name);
     }
 }
