@@ -55,16 +55,15 @@ function Dropdown() {
   );
 
   return (
-    <div>
-      <Box sx={{ display: "flex", justifyContent: "flex-start", p: 2 }}>
-        <Button sx={{ color: "white"}} onClick={toggleDrawer(true)}>
-          <MenuIcon sx={{ fontSize: "36px" }} />
-        </Button>
-        <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
-          {DrawerList}
-        </Drawer>
-      </Box>
-    </div>
+    <Box sx={{ position: "absolute", top: "16px", left: "16px" }}> {/* Adjusted positioning */}
+      <Button sx={{ color: "white" }} onClick={toggleDrawer(true)}>
+        <MenuIcon sx={{ fontSize: "36px" }} />
+      </Button>
+      <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
+        {DrawerList}
+      </Drawer>
+    </Box>
   );
 }
+
 export default Dropdown;

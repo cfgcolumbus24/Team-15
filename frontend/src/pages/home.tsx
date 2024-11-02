@@ -62,32 +62,32 @@ const Home: React.FC = () => {
         mb={4}
         p={3}
         sx={{
-          background: `linear-gradient(135deg, ${blue[800]} 30%, ${blue[600]} 90%)`,
-          color: 'white',
-          borderRadius: 0,
-          position: 'relative',
+            background: `linear-gradient(135deg, ${blue[800]} 30%, ${blue[600]} 90%)`,
+            color: 'white',
+            borderRadius: 0,
+            position: 'relative',
         }}
-      >
+        >
+        <Dropdown /> {/* Rendered with fixed positioning */}
+        
         <Typography variant="h3" fontWeight="bold">
-          Netcare Clinician Dashboard
+            Netcare Clinician Dashboard
         </Typography>
         <Typography variant="subtitle1">
-          A comprehensive view of patient statistics and trends
+            A comprehensive view of patient statistics and trends
         </Typography>
-        
-        {/*Dropdown for toggling options */}
-        <Dropdown />
 
         {/* Icons for Settings and Profile */}
         <Box position="absolute" top={16} right={16} display="flex" gap={2}>
-          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
+            <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
             <SettingsIcon sx={{ fontSize: 30 }} />
-          </IconButton>
-          <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
+            </IconButton>
+            <IconButton sx={{ color: 'white', '&:hover': { backgroundColor: blue[300] } }}>
             <AccountCircleIcon sx={{ fontSize: 30 }} />
-          </IconButton>
+            </IconButton>
         </Box>
-      </Box>
+        </Box>
+
 
       <Grid container spacing={3} justifyContent="center">
         {/* Upcoming Appointments Card */}
